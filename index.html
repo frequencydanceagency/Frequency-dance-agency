@@ -3,113 +3,964 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frequency Dance Agency</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Frequency Dance Agency | Kenya's Premier Dance Talent Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'display': ['Orbitron', 'sans-serif'],
+                        'body': ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        'frequency': {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                        'neon': '#ccff00',
+                        'deep': '#0f172a',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'shake': 'shake 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px #ccff00, 0 0 10px #ccff00' },
+                            '100%': { boxShadow: '0 0 20px #ccff00, 0 0 30px #ccff00' },
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '25%': { transform: 'translateX(-5px)' },
+                            '75%': { transform: 'translateX(5px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
+            font-family: 'Nunito', sans-serif;
+            background-color: #0f172a;
             color: white;
-            padding: 10px 20px;
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            overflow-x: hidden;
         }
-        nav {
-            display: flex;
-            flex-direction: row;
-            gap: 15px;
+        .font-display {
+            font-family: 'Orbitron', sans-serif;
         }
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: background 0.3s;
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        nav a:hover {
-            background: #555;
+        .neon-text {
+            text-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
         }
-        .mobile-nav {
+        .gradient-text {
+            background: linear-gradient(135deg, #f97316 0%, #ccff00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dancer-card:hover, .group-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+        .hidden-section {
             display: none;
         }
-        .responsive {
-            flex-wrap: wrap;
-            justify-content: space-around;
+        .active-section {
+            display: block;
+            animation: slideUp 0.5s ease-out;
         }
-        main {
-            padding: 20px;
+        ::-webkit-scrollbar {
+            width: 10px;
         }
-        footer {
-            background-color: #333;
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f97316;
+            border-radius: 5px;
+        }
+        .verification-code {
+            letter-spacing: 0.5em;
+            font-family: 'Orbitron', monospace;
+        }
+        .logo-container {
+            background: #000000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.1) contrast(1.1);
+        }
+        .nav-btn.active {
+            color: #f97316;
+            background: rgba(249, 115, 22, 0.1);
+        }
+        .filter-btn.active {
+            background: #f97316;
             color: white;
-            text-align: center;
-            padding: 10px 0;
         }
-        @media (max-width: 600px) {
-            nav {
-                flex-direction: column;
-                display: block;
-            }
-            .mobile-nav {
-                display: block;
-                background: #333;
-                color: white;
-                padding: 10px;
-                cursor: pointer;
-            }
-            .mobile-nav ul {
-                display: none;
-                flex-direction: column;
-                list-style: none;
-                padding: 0;
-            }
-            .mobile-nav ul.show {
-                display: flex;
-            }
-            nav a {
-                padding: 10px;
-                text-align: center;
-            }
+        .mobile-menu-open {
+            display: block !important;
+        }
+        /* Smooth transitions */
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
         }
     </style>
 </head>
-<body>
-    <header>
-        <div class="logo">Frequency Dance Agency</div>
-        <div class="mobile-nav" onclick="toggleNav()">
-            ☰ Menu
-            <ul id="mobile-menu"> 
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#classes">Classes</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+                    <!-- Logo -->
+                    <div class="logo-container w-10 h-10 sm:w-12 sm:h-12 border-2 border-frequency-500/50 shadow-lg shadow-frequency-500/20">
+                        <img src="https://frequencydanceagency.github.io/Frequency-dance-agency/logo.png" alt="Frequency Dance Agency Logo" class="logo-img p-1">
+                    </div>
+                    <div class="hidden sm:block">
+                        <span class="font-display text-lg sm:text-xl font-bold gradient-text leading-tight block">FREQUENCY</span>
+                        <span class="text-xs text-gray-400 tracking-widest block">DANCE AGENCY</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-2 lg:space-x-6">
+                        <button onclick="showSection('home')" class="nav-btn active hover:text-frequency-400 px-3 py-2 rounded-md text-sm font-bold transition-all duration-300" data-section="home">HOME</button>
+                        <button onclick="showSection('dancers')" class="nav-btn hover:text-frequency-400 px-3 py-2 rounded-md text-sm font-bold transition-all duration-300" data-section="dancers">DANCERS</button>
+                        <button onclick="showSection('groups')" class="nav-btn hover:text-frequency-400 px-3 py-2 rounded-md text-sm font-bold transition-all duration-300" data-section="groups">GROUPS</button>
+                        <button onclick="showSection('leaderboard')" class="nav-btn hover:text-frequency-400 px-3 py-2 rounded-md text-sm font-bold transition-all duration-300" data-section="leaderboard">LEADERBOARD</button>
+                        <button onclick="showSection('book')" class="nav-btn hover:text-frequency-400 px-3 py-2 rounded-md text-sm font-bold transition-all duration-300" data-section="book">BOOK NOW</button>
+                        <button onclick="showSection('register')" class="bg-frequency-500 hover:bg-frequency-600 text-white px-4 lg:px-6 py-2 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg shadow-frequency-500/30 text-sm lg:text-base">
+                            JOIN US
+                        </button>
+                    </div>
+                </div>
+
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-white hover:text-frequency-400 p-2 focus:outline-none" aria-label="Toggle menu">
+                        <i class="fas fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#classes">Classes</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Welcome to Frequency Dance Agency!</h1>
-        <p>Experience the joy of dance.</p>
-    </main>
-    <footer>
-        <p>&copy; 2026 Frequency Dance Agency</p>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10 absolute w-full">
+            <div class="px-4 py-4 space-y-2">
+                <button onclick="showSection('home')" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-frequency-500/20 hover:text-frequency-400 transition-all active" data-section="home">Home</button>
+                <button onclick="showSection('dancers')" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-frequency-500/20 hover:text-frequency-400 transition-all" data-section="dancers">Dancers</button>
+                <button onclick="showSection('groups')" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-frequency-500/20 hover:text-frequency-400 transition-all" data-section="groups">Groups</button>
+                <button onclick="showSection('leaderboard')" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-frequency-500/20 hover:text-frequency-400 transition-all" data-section="leaderboard">Leaderboard</button>
+                <button onclick="showSection('book')" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-frequency-500/20 hover:text-frequency-400 transition-all" data-section="book">Book Now</button>
+                <button onclick="showSection('register')" class="mobile-nav-btn block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-frequency-400 hover:bg-frequency-500/20 transition-all" data-section="register">Join Us</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="active-section pt-20">
+        <div class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=1920&q=80')] bg-cover bg-center opacity-20"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900"></div>
+            
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 pb-16 sm:pb-32 text-center">
+                <!-- Big Logo Display -->
+                <div class="mb-6 sm:mb-8 flex justify-center">
+                    <div class="logo-container w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 border-4 border-frequency-500/30 shadow-2xl shadow-frequency-500/20 animate-pulse-slow">
+                        <img src="https://frequencydanceagency.github.io/Frequency-dance-agency/logo.png" alt="Frequency Dance Agency" class="logo-img p-2 sm:p-4">
+                    </div>
+                </div>
+                
+                <div class="inline-block mb-4 px-4 py-1 rounded-full bg-frequency-500/20 border border-frequency-500/50 text-frequency-300 text-sm font-bold animate-pulse">
+                    <i class="fas fa-map-marker-alt mr-2"></i>Kenya
+                </div>
+                <h1 class="font-display text-3xl sm:text-5xl md:text-7xl font-black mb-4 sm:mb-6 leading-tight px-2">
+                    FEEL THE <span class="gradient-text neon-text">BEAT</span><br>
+                    OWN THE <span class="text-frequency-400">STAGE</span>
+                </h1>
+                <p class="mt-4 max-w-2xl mx-auto text-base sm:text-xl text-gray-300 mb-6 sm:mb-8 px-4">
+                    Kenya's hottest dance agency connecting elite dancers & dance crews with top clients. 
+                    From solo acts to group performances, we bring the energy.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center px-4">
+                    <button onclick="showSection('book')" class="bg-frequency-500 hover:bg-frequency-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-frequency-500/50 flex items-center justify-center gap-2 w-full sm:w-auto">
+                        <i class="fas fa-calendar-check"></i> Book Talent
+                    </button>
+                    <button onclick="showSection('register')" class="glass-panel hover:bg-white/10 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg transition-all duration-300 border border-white/20 flex items-center justify-center gap-2 w-full sm:w-auto">
+                        <i class="fas fa-user-plus"></i> Join as Dancer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-frequency-600 py-6 sm:py-8">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center">
+                <div class="p-2">
+                    <div class="font-display text-2xl sm:text-3xl font-bold text-white">150+</div>
+                    <div class="text-frequency-100 text-sm sm:text-base">Pro Dancers</div>
+                </div>
+                <div class="p-2">
+                    <div class="font-display text-2xl sm:text-3xl font-bold text-white">25+</div>
+                    <div class="text-frequency-100 text-sm sm:text-base">Dance Crews</div>
+                </div>
+                <div class="p-2">
+                    <div class="font-display text-2xl sm:text-3xl font-bold text-white">500+</div>
+                    <div class="text-frequency-100 text-sm sm:text-base">Events Done</div>
+                </div>
+                <div class="p-2">
+                    <div class="font-display text-2xl sm:text-3xl font-bold text-white">4.9</div>
+                    <div class="text-frequency-100 text-sm sm:text-base">Star Rating</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 py-12 sm:py-20">
+            <h2 class="font-display text-2xl sm:text-4xl font-bold text-center mb-8 sm:mb-12">Featured <span class="gradient-text">Talent</span></h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="featured-dancers">
+            </div>
+            <div class="text-center mt-8 sm:mt-12">
+                <button onclick="showSection('dancers')" class="text-frequency-400 hover:text-frequency-300 font-bold text-base sm:text-lg flex items-center justify-center gap-2 mx-auto transition-all">
+                    View All Dancers <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="glass-panel py-12 sm:py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-center mb-8 sm:mb-16">How It <span class="gradient-text">Works</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
+                    <div class="text-center group px-4">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-frequency-500 rounded-full flex items-center justify-center text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-frequency-500/30">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                        <h3 class="font-display text-lg sm:text-xl font-bold mb-2 sm:mb-4">1. Browse</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">Check out solo dancers or dance crews, watch videos, see styles.</p>
+                    </div>
+                    <div class="text-center group px-4">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-neon rounded-full flex items-center justify-center text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-neon/30 text-slate-900">
+                            <i class="fas fa-hand-pointer"></i>
+                        </div>
+                        <h3 class="font-display text-lg sm:text-xl font-bold mb-2 sm:mb-4">2. Book</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">Select individual or group, choose date, fill booking form.</p>
+                    </div>
+                    <div class="text-center group px-4">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-purple-500 rounded-full flex items-center justify-center text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-purple-500/30">
+                            <i class="fas fa-fire text-white"></i>
+                        </div>
+                        <h3 class="font-display text-lg sm:text-xl font-bold mb-2 sm:mb-4">3. Dance</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">Talent shows up and brings fire to your event!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dancers Registry Section -->
+    <section id="dancers" class="hidden-section pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 py-8 sm:py-12">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="font-display text-3xl sm:text-5xl font-bold mb-4">Solo <span class="gradient-text">Artists</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto px-4 text-sm sm:text-base">Meet Kenya's finest individual dancers. Filter by style, check availability.</p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 flex flex-wrap gap-2 sm:gap-4 justify-center">
+                <button onclick="filterDancers('all')" class="filter-btn active px-4 sm:px-6 py-2 rounded-full bg-frequency-500 text-white font-bold transition-all text-sm sm:text-base" data-filter="all">All Styles</button>
+                <button onclick="filterDancers('afrobeat')" class="filter-btn px-4 sm:px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition-all text-sm sm:text-base" data-filter="afrobeat">Afrobeat</button>
+                <button onclick="filterDancers('hiphop')" class="filter-btn px-4 sm:px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition-all text-sm sm:text-base" data-filter="hiphop">Hip Hop</button>
+                <button onclick="filterDancers('contemporary')" class="filter-btn px-4 sm:px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition-all text-sm sm:text-base" data-filter="contemporary">Contemporary</button>
+                <button onclick="filterDancers('dancehall')" class="filter-btn px-4 sm:px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition-all text-sm sm:text-base" data-filter="dancehall">Dancehall</button>
+                <button onclick="filterDancers('ballet')" class="filter-btn px-4 sm:px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition-all text-sm sm:text-base" data-filter="ballet">Ballet</button>
+            </div>
+
+            <div id="dancers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8"></div>
+        </div>
+    </section>
+
+    <!-- Dance Groups Section -->
+    <section id="groups" class="hidden-section pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 py-8 sm:py-12">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="font-display text-3xl sm:text-5xl font-bold mb-4">Dance <span class="gradient-text">Crews</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto px-4 text-sm sm:text-base">Book professional dance groups for events, music videos, and corporate shows. From 3-person crews to 20+ member teams.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+                <div class="glass-panel rounded-2xl p-4 sm:p-6 text-center border-2 border-transparent hover:border-frequency-500 transition-all cursor-pointer" onclick="filterGroups('all')">
+                    <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">👥</div>
+                    <h3 class="font-bold text-base sm:text-lg">All Crews</h3>
+                    <p class="text-xs sm:text-sm text-gray-400">Browse all groups</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4 sm:p-6 text-center border-2 border-transparent hover:border-frequency-500 transition-all cursor-pointer" onclick="filterGroups('small')">
+                    <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🎭</div>
+                    <h3 class="font-bold text-base sm:text-lg">Small Crews</h3>
+                    <p class="text-xs sm:text-sm text-gray-400">3-5 members</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4 sm:p-6 text-center border-2 border-transparent hover:border-frequency-500 transition-all cursor-pointer" onclick="filterGroups('large')">
+                    <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🏟️</div>
+                    <h3 class="font-bold text-base sm:text-lg">Large Troupes</h3>
+                    <p class="text-xs sm:text-sm text-gray-400">6+ members</p>
+                </div>
+            </div>
+
+            <div id="groups-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 mb-8 sm:mb-12"></div>
+
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 md:p-12 text-center border-2 border-neon/30 bg-gradient-to-br from-slate-800/50 to-frequency-900/20">
+                <h3 class="font-display text-2xl sm:text-3xl font-bold mb-4">Have a Dance Crew?</h3>
+                <p class="text-gray-400 mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base">Register your group with Frequency and get access to high-paying gigs, professional choreography support, and nationwide exposure.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="showSection('register')" class="bg-neon text-slate-900 px-6 sm:px-8 py-3 rounded-full font-bold hover:bg-neon/80 transition-all text-sm sm:text-base">
+                        Register Your Crew
+                    </button>
+                    <button onclick="showGroupBenefits()" class="glass-panel text-white px-6 sm:px-8 py-3 rounded-full font-bold hover:bg-white/10 transition-all border border-white/20 text-sm sm:text-base">
+                        View Benefits
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section id="leaderboard" class="hidden-section pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 py-8 sm:py-12">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="font-display text-3xl sm:text-5xl font-bold mb-4">Top Performers <span class="gradient-text">Leaderboard</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto px-4 text-sm sm:text-base">Our highest-rated dancers and crews based on client reviews and booking frequency.</p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-4 sm:p-8 mb-6 sm:mb-8">
+                <div class="flex flex-col sm:flex-row gap-4 mb-6 justify-center">
+                    <button onclick="showLeaderboard('dancers')" class="leaderboard-tab active px-6 py-2 rounded-full bg-frequency-500 text-white font-bold transition-all text-sm sm:text-base" data-tab="dancers">Top Dancers</button>
+                    <button onclick="showLeaderboard('groups')" class="leaderboard-tab px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition-all text-sm sm:text-base" data-tab="groups">Top Crews</button>
+                </div>
+                
+                <div id="leaderboard-content" class="space-y-4">
+                    <!-- Leaderboard items will be populated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Now Section -->
+    <section id="book" class="hidden-section pt-20 min-h-screen">
+        <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="font-display text-3xl sm:text-5xl font-bold mb-4">Book <span class="gradient-text">Talent</span></h2>
+                <p class="text-gray-400 px-4 text-sm sm:text-base">Fill out the form below and we'll connect you with the perfect dancer or crew for your event.</p>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 md:p-12">
+                <form id="booking-form" class="space-y-4 sm:space-y-6" onsubmit="handleBooking(event)">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Your Name</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Email</label>
+                            <input type="email" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="john@example.com">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Phone</label>
+                            <input type="tel" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="+254 712 345 678">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Event Date</label>
+                            <input type="date" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Talent Type</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:border-frequency-500 transition-all">
+                                <input type="radio" name="talent-type" value="solo" class="w-5 h-5 text-frequency-500" onchange="toggleTalentSelect('solo')">
+                                <span>Solo Dancer</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:border-frequency-500 transition-all">
+                                <input type="radio" name="talent-type" value="group" class="w-5 h-5 text-frequency-500" onchange="toggleTalentSelect('group')">
+                                <span>Dance Crew</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="solo-select" class="hidden">
+                        <label class="block text-sm font-bold mb-2">Select Dancer</label>
+                        <select class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white">
+                            <option value="">Choose a dancer...</option>
+                            <option value="dancer1">Zara Moves (Afrobeat)</option>
+                            <option value="dancer2">Jay Static (Hip Hop)</option>
+                            <option value="dancer3">Luna Flow (Contemporary)</option>
+                        </select>
+                    </div>
+
+                    <div id="group-select" class="hidden">
+                        <label class="block text-sm font-bold mb-2">Select Crew</label>
+                        <select class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white">
+                            <option value="">Choose a crew...</option>
+                            <option value="group1">The Rhythm Kings</option>
+                            <option value="group2">Neon Squad</option>
+                            <option value="group3">Afro Fusion Collective</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Event Type</label>
+                        <select required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white">
+                            <option value="">Select event type...</option>
+                            <option value="corporate">Corporate Event</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="music-video">Music Video</option>
+                            <option value="private">Private Party</option>
+                            <option value="festival">Festival</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Additional Details</label>
+                        <textarea rows="4" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="Tell us about your event, venue, duration needed, etc."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-frequency-500 hover:bg-frequency-600 text-white py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-frequency-500/30">
+                        Submit Booking Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Register/Join Us Section -->
+    <section id="register" class="hidden-section pt-20 min-h-screen">
+        <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="font-display text-3xl sm:text-5xl font-bold mb-4">Join <span class="gradient-text">Frequency</span></h2>
+                <p class="text-gray-400 px-4 text-sm sm:text-base">Register as a dancer or dance crew and start getting booked for top events across Kenya.</p>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 md:p-12">
+                <div class="flex flex-col sm:flex-row gap-4 mb-6 sm:mb-8">
+                    <button onclick="toggleRegisterType('solo')" id="btn-solo" class="flex-1 py-3 rounded-xl bg-frequency-500 text-white font-bold transition-all text-sm sm:text-base">Solo Dancer</button>
+                    <button onclick="toggleRegisterType('crew')" id="btn-crew" class="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-all text-sm sm:text-base">Dance Crew</button>
+                </div>
+
+                <form id="register-form" class="space-y-4 sm:space-y-6" onsubmit="handleRegister(event)">
+                    <div id="solo-fields">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Stage Name</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="Your performance name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Full Name</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="Your legal name">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Primary Style</label>
+                                <select required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white">
+                                    <option value="">Select style...</option>
+                                    <option value="afrobeat">Afrobeat</option>
+                                    <option value="hiphop">Hip Hop</option>
+                                    <option value="contemporary">Contemporary</option>
+                                    <option value="dancehall">Dancehall</option>
+                                    <option value="ballet">Ballet</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Years of Experience</label>
+                                <input type="number" min="0" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="e.g., 5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="crew-fields" class="hidden">
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Crew Name</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="Your crew name">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Number of Members</label>
+                                <input type="number" min="2" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="e.g., 5">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Crew Leader Name</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="Leader's name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Email</label>
+                            <input type="email" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="your@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2">Phone</label>
+                            <input type="tel" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="0114554471">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Location in Kenya</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="e.g., Nairobi, Westlands">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Bio / Description</label>
+                        <textarea rows="3" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="Tell us about yourself or your crew..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Video Link (Portfolio)</label>
+                        <input type="url" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-frequency-500 focus:outline-none text-white placeholder-gray-500" placeholder="YouTube or Instagram link">
+                    </div>
+
+                    <button type="submit" class="w-full bg-neon text-slate-900 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-[1.02] hover:bg-neon/80">
+                        Submit Application
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-white/10 mt-20">
+        <div class="max-w-7xl mx-auto px-4 py-12 sm:py-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start gap-3 mb-4">
+                        <div class="logo-container w-12 h-12 border-2 border-frequency-500/50">
+                            <img src="https://frequencydanceagency.github.io/Frequency-dance-agency/logo.png" alt="Frequency Dance Agency" class="logo-img p-1">
+                        </div>
+                        <div>
+                            <span class="font-display text-lg font-bold gradient-text block">FREQUENCY</span>
+                            <span class="text-xs text-gray-400">DANCE AGENCY</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">Kenya's premier dance talent agency connecting elite performers with top clients nationwide.</p>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h4 class="font-display font-bold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><button onclick="showSection('dancers')" class="hover:text-frequency-400 transition-colors">Browse Dancers</button></li>
+                        <li><button onclick="showSection('groups')" class="hover:text-frequency-400 transition-colors">Dance Crews</button></li>
+                        <li><button onclick="showSection('book')" class="hover:text-frequency-400 transition-colors">Book Talent</button></li>
+                        <li><button onclick="showSection('register')" class="hover:text-frequency-400 transition-colors">Join Agency</button></li>
+                    </ul>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h4 class="font-display font-bold text-lg mb-4">Contact Us</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-center justify-center sm:justify-start gap-2">
+                            <i class="fas fa-envelope text-frequency-500"></i>
+                            <a href="mailto:frequencydanceagencykenya@gmail.com" class="hover:text-frequency-400 transition-colors break-all">frequencydanceagencykenya@gmail.com</a>
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start gap-2">
+                            <i class="fas fa-phone text-frequency-500"></i>
+                            <a href="tel:0114554471" class="hover:text-frequency-400 transition-colors">0114554471</a>
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start gap-2">
+                            <i class="fas fa-map-marker-alt text-frequency-500"></i>
+                            <span>Kenya</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h4 class="font-display font-bold text-lg mb-4">Follow Us</h4>
+                    <div class="flex justify-center sm:justify-start gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-frequency-500 transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-frequency-500 transition-all">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-frequency-500 transition-all">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-frequency-500 transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 mt-8 sm:mt-12 pt-8 text-center text-sm text-gray-500">
+                <p>&copy; 2024 Frequency Dance Agency. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-frequency-500 text-white px-6 py-3 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
     <script>
-        function toggleNav() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('show');
+        // Sample data for dancers
+        const dancers = [
+            { id: 1, name: "Zara Moves", style: "afrobeat", rating: 4.9, image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&q=80", price: "KSh 15,000", location: "Nairobi" },
+            { id: 2, name: "Jay Static", style: "hiphop", rating: 4.8, image: "https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=400&q=80", price: "KSh 12,000", location: "Mombasa" },
+            { id: 3, name: "Luna Flow", style: "contemporary", rating: 4.9, image: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&q=80", price: "KSh 18,000", location: "Nairobi" },
+            { id: 4, name: "King Kev", style: "dancehall", rating: 4.7, image: "https://images.unsplash.com/photo-1547153760-18fc86324498?w=400&q=80", price: "KSh 14,000", location: "Kisumu" },
+            { id: 5, name: "Bella Grace", style: "ballet", rating: 4.9, image: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&q=80", price: "KSh 20,000", location: "Nairobi" },
+            { id: 6, name: "Flex Master", style: "hiphop", rating: 4.6, image: "https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=400&q=80", price: "KSh 13,000", location: "Nakuru" }
+        ];
+
+        // Sample data for groups
+        const groups = [
+            { id: 1, name: "The Rhythm Kings", members: 5, style: "afrobeat", rating: 4.9, image: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=400&q=80", price: "KSh 45,000" },
+            { id: 2, name: "Neon Squad", members: 8, style: "hiphop", rating: 4.8, image: "https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=400&q=80", price: "KSh 60,000" },
+            { id: 3, name: "Afro Fusion Collective", members: 12, style: "afrobeat", rating: 4.9, image: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=400&q=80", price: "KSh 80,000" },
+            { id: 4, name: "Urban Pulse", members: 4, style: "contemporary", rating: 4.7, image: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&q=80", price: "KSh 35,000" }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFeaturedDancers();
+            renderDancers('all');
+            renderGroups('all');
+            renderLeaderboard('dancers');
+        });
+
+        // Navigation functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active-section');
+                section.classList.add('hidden-section');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden-section');
+                targetSection.classList.add('active-section');
+            }
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.section === sectionId) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update mobile nav buttons
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-frequency-400', 'bg-frequency-500/20');
+                if (btn.dataset.section === sectionId) {
+                    btn.classList.add('active', 'text-frequency-400', 'bg-frequency-500/20');
+                }
+            });
+            
+            // Close mobile menu
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('mobile-menu-open');
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('mobile-menu-open');
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('mobile-menu-open');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+
+        // Render functions
+        function renderFeaturedDancers() {
+            const container = document.getElementById('featured-dancers');
+            const featured = dancers.slice(0, 3);
+            
+            container.innerHTML = featured.map(dancer => `
+                <div class="dancer-card glass-panel rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer group" onclick="showSection('book')">
+                    <div class="relative h-48 sm:h-64 overflow-hidden">
+                        <img src="${dancer.image}" alt="${dancer.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-frequency-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                            ${dancer.rating} <i class="fas fa-star text-xs"></i>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="font-display text-lg sm:text-xl font-bold mb-2">${dancer.name}</h3>
+                        <p class="text-frequency-400 text-sm mb-2 capitalize">${dancer.style}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-map-marker-alt mr-1"></i>${dancer.location}</span>
+                            <span class="font-bold text-neon">${dancer.price}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDancers(filter) {
+            const container = document.getElementById('dancers-grid');
+            const filtered = filter === 'all' ? dancers : dancers.filter(d => d.style === filter);
+            
+            container.innerHTML = filtered.map(dancer => `
+                <div class="dancer-card glass-panel rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer group">
+                    <div class="relative h-48 sm:h-64 overflow-hidden">
+                        <img src="${dancer.image}" alt="${dancer.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-frequency-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                            ${dancer.rating} <i class="fas fa-star text-xs"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button onclick="showSection('book')" class="bg-frequency-500 text-white px-6 py-2 rounded-full font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="font-display text-lg sm:text-xl font-bold mb-2">${dancer.name}</h3>
+                        <p class="text-frequency-400 text-sm mb-2 capitalize">${dancer.style}</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-map-marker-alt mr-1"></i>${dancer.location}</span>
+                            <span class="font-bold text-neon">${dancer.price}</span>
+                        </div>
+                        <button onclick="showSection('book')" class="w-full bg-white/10 hover:bg-frequency-500 text-white py-2 rounded-lg font-bold transition-all text-sm sm:text-base">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterDancers(style) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === style) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderDancers(style);
+        }
+
+        function renderGroups(filter) {
+            const container = document.getElementById('groups-grid');
+            let filtered = groups;
+            
+            if (filter === 'small') {
+                filtered = groups.filter(g => g.members <= 5);
+            } else if (filter === 'large') {
+                filtered = groups.filter(g => g.members > 5);
+            }
+            
+            container.innerHTML = filtered.map(group => `
+                <div class="group-card glass-panel rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer group">
+                    <div class="relative h-48 sm:h-64 overflow-hidden">
+                        <img src="${group.image}" alt="${group.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-neon text-slate-900 px-3 py-1 rounded-full text-sm font-bold">
+                            ${group.members} Members
+                        </div>
+                        <div class="absolute top-4 right-4 bg-frequency-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                            ${group.rating} <i class="fas fa-star text-xs"></i>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="font-display text-lg sm:text-xl font-bold mb-2">${group.name}</h3>
+                        <p class="text-frequency-400 text-sm mb-4 capitalize">${group.style} Crew</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-400 text-sm">Starting from</span>
+                            <span class="font-bold text-neon text-lg">${group.price}</span>
+                        </div>
+                        <button onclick="showSection('book')" class="w-full bg-frequency-500 hover:bg-frequency-600 text-white py-3 rounded-lg font-bold transition-all text-sm sm:text-base">
+                            Book Crew
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterGroups(size) {
+            renderGroups(size);
+            showToast(`Filtered by: ${size === 'all' ? 'All Crews' : size === 'small' ? 'Small Crews (3-5)' : 'Large Troupes (6+)'}`);
+        }
+
+        function renderLeaderboard(type) {
+            const container = document.getElementById('leaderboard-content');
+            const data = type === 'dancers' ? dancers : groups;
+            const sorted = [...data].sort((a, b) => b.rating - a.rating).slice(0, 5);
+            
+            container.innerHTML = sorted.map((item, index) => `
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all cursor-pointer" onclick="showSection('${type === 'dancers' ? 'dancers' : 'groups'}')">
+                    <div class="font-display text-2xl sm:text-3xl font-bold w-12 text-center ${index < 3 ? 'text-frequency-400' : 'text-gray-500'}">
+                        #${index + 1}
+                    </div>
+                    <img src="${item.image}" alt="${item.name}" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-frequency-500/30">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-base sm:text-lg truncate">${item.name}</h4>
+                        <p class="text-gray-400 text-xs sm:text-sm capitalize">${item.style || item.members + ' members'} • ${item.location || 'Kenya'}</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-display text-xl sm:text-2xl font-bold text-frequency-400">${item.rating}</div>
+                        <div class="text-xs text-gray-500">Rating</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showLeaderboard(type) {
+            // Update tabs
+            document.querySelectorAll('.leaderboard-tab').forEach(tab => {
+                tab.classList.remove('active', 'bg-frequency-500');
+                tab.classList.add('bg-white/10');
+                if (tab.dataset.tab === type) {
+                    tab.classList.add('active', 'bg-frequency-500');
+                    tab.classList.remove('bg-white/10');
+                }
+            });
+            
+            renderLeaderboard(type);
+        }
+
+        // Form handling
+        function toggleTalentSelect(type) {
+            const soloSelect = document.getElementById('solo-select');
+            const groupSelect = document.getElementById('group-select');
+            
+            if (type === 'solo') {
+                soloSelect.classList.remove('hidden');
+                groupSelect.classList.add('hidden');
+            } else {
+                soloSelect.classList.add('hidden');
+                groupSelect.classList.remove('hidden');
+            }
+        }
+
+        function toggleRegisterType(type) {
+            const soloBtn = document.getElementById('btn-solo');
+            const crewBtn = document.getElementById('btn-crew');
+            const soloFields = document.getElementById('solo-fields');
+            const crewFields = document.getElementById('crew-fields');
+            
+            if (type === 'solo') {
+                soloBtn.classList.add('bg-frequency-500');
+                soloBtn.classList.remove('bg-white/10');
+                crewBtn.classList.remove('bg-frequency-500');
+                crewBtn.classList.add('bg-white/10');
+                soloFields.classList.remove('hidden');
+                crewFields.classList.add('hidden');
+                
+                // Update required fields
+                soloFields.querySelectorAll('input, select').forEach(field => field.required = true);
+                crewFields.querySelectorAll('input, select').forEach(field => field.required = false);
+            } else {
+                crewBtn.classList.add('bg-frequency-500');
+                crewBtn.classList.remove('bg-white/10');
+                soloBtn.classList.remove('bg-frequency-500');
+                soloBtn.classList.add('bg-white/10');
+                crewFields.classList.remove('hidden');
+                soloFields.classList.add('hidden');
+                
+                // Update required fields
+                crewFields.querySelectorAll('input, select').forEach(field => field.required = true);
+                soloFields.querySelectorAll('input, select').forEach(field => field.required = false);
+            }
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            showToast('Booking request submitted! We will contact you shortly.');
+            e.target.reset();
+            document.getElementById('solo-select').classList.add('hidden');
+            document.getElementById('group-select').classList.add('hidden');
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            showToast('Application submitted! Welcome to Frequency Dance Agency.');
+            e.target.reset();
+        }
+
+        function showGroupBenefits() {
+            showToast('Benefits: High-paying gigs, professional support, nationwide exposure!');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuButton = document.querySelector('button[onclick="toggleMobileMenu()"]');
+            
+            if (!mobileMenu.contains(e.target) && !menuButton.contains(e.target) && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('mobile-menu-open');
+                document.getElementById('menu-icon').classList.remove('fa-times');
+                document.getElementById('menu-icon').classList.add('fa-bars');
+            }
+        });
     </script>
 </body>
 </html>
