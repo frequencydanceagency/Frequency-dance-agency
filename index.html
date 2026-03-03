@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frequency Dance Agency | Kenya's Premier Dance Talent Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,6 +18,7 @@
             --neon-cyan: #00f3ff;
             --neon-pink: #ff00ff;
             --neon-purple: #bf00ff;
+            --neon-green: #00ff88;
             --dark-bg: #050508;
             --darker-bg: #020203;
             --glass: rgba(255, 255, 255, 0.03);
@@ -29,6 +32,10 @@
             line-height: 1.6;
         }
 
+        h1, h2, h3, .brand-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
         /* Animated Background */
         .bg-animation {
             position: fixed;
@@ -36,7 +43,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -2;
             background: 
                 radial-gradient(circle at 20% 80%, rgba(0, 243, 255, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
@@ -70,16 +77,32 @@
             100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
 
+        /* Grid Pattern Overlay */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
         /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             padding: 1rem 5%;
-            background: rgba(5, 5, 8, 0.9);
+            background: rgba(5, 5, 8, 0.95);
             backdrop-filter: blur(20px);
             z-index: 1000;
             border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            transition: all 0.3s;
         }
 
         .nav-container {
@@ -99,28 +122,63 @@
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             letter-spacing: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            position: relative;
+        }
+
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--neon-cyan);
+            stroke-width: 2;
+            filter: drop-shadow(0 0 5px var(--neon-cyan));
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
             color: #fff;
             text-decoration: none;
             font-weight: 500;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             transition: all 0.3s;
             position: relative;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover, .nav-links a.active {
             color: var(--neon-cyan);
             background: rgba(0, 243, 255, 0.1);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-cyan);
         }
 
         .mobile-menu-btn {
@@ -132,17 +190,34 @@
             border-radius: 10px;
             font-family: 'Orbitron', sans-serif;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 6rem 1rem 2rem;
+            padding: 2rem 1rem;
             position: relative;
         }
 
@@ -152,22 +227,21 @@
         }
 
         .logo-ring {
-            width: 250px;
-            height: 250px;
+            width: 200px;
+            height: 200px;
             margin: 0 auto 2rem;
             position: relative;
             animation: pulse 4s ease-in-out infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.5)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 40px rgba(0, 243, 255, 0.8)); }
         }
 
         .ring-svg {
             width: 100%;
             height: 100%;
-            transform: rotate(0deg);
             animation: rotate 20s linear infinite;
         }
 
@@ -204,7 +278,7 @@
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 3rem;
             opacity: 0.9;
             max-width: 600px;
@@ -214,64 +288,81 @@
 
         .cta-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 1.2rem 2.5rem;
-            font-size: 1.2rem;
+            padding: 0.8rem 1.8rem;
+            font-size: 0.85rem;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             position: relative;
             overflow: hidden;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
         }
 
         .btn-primary {
             background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
             color: #000;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 40px rgba(0, 243, 255, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 243, 255, 0.6);
         }
 
         .btn-secondary {
             background: transparent;
             color: var(--neon-cyan);
             border: 2px solid var(--neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
         }
 
         .btn-secondary:hover {
             background: rgba(0, 243, 255, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 243, 255, 0.3);
         }
 
-        /* Sections */
-        section {
-            padding: 5rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
+        .btn-pink {
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+        }
+
+        .btn-pink:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 0, 255, 0.6);
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 1rem;
         }
 
         .section-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            text-align: center;
-            margin-bottom: 1rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 3px;
             background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
@@ -280,122 +371,428 @@
         }
 
         .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             opacity: 0.8;
-            margin-bottom: 3rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Dancers Grid */
+        /* Content Sections */
+        .content-section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Dancers Gallery - Enhanced from DanceVerse */
+        .gallery-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            background: transparent;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            color: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--neon-cyan);
+            color: #000;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+        }
+
         .dancers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
         }
 
         .dancer-card {
             background: var(--glass);
             border: 1px solid rgba(0, 243, 255, 0.2);
             border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s;
-            position: relative;
             overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
         }
 
         .dancer-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            inset: 0;
             background: linear-gradient(45deg, transparent, rgba(0, 243, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            opacity: 0;
+            transform: translateX(-100%);
+            transition: transform 0.6s;
         }
 
         .dancer-card:hover::before {
-            opacity: 1;
-            left: 100%;
+            transform: translateX(100%);
         }
 
         .dancer-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: var(--neon-cyan);
             box-shadow: 0 20px 40px rgba(0, 243, 255, 0.2);
         }
 
-        .dancer-avatar {
-            width: 120px;
-            height: 120px;
+        .dancer-image-container {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .dancer-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dancer-card:hover .dancer-image {
+            transform: scale(1.1);
+        }
+
+        .dancer-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+        }
+
+        .dancer-card:hover .dancer-overlay {
+            opacity: 1;
+        }
+
+        .dancer-info {
+            padding: 1.5rem;
+        }
+
+        .dancer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+        }
+
+        .dancer-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-cyan);
+            margin: 0;
+        }
+
+        .verified-badge {
+            width: 20px;
+            height: 20px;
+            background: var(--neon-cyan);
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-            margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            border: 3px solid var(--neon-cyan);
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+            font-size: 0.7rem;
+            color: #000;
         }
 
-        .dancer-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--neon-cyan);
+        .dancer-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1rem;
         }
 
         .dancer-style {
             display: inline-block;
             background: rgba(255, 0, 255, 0.2);
             color: var(--neon-pink);
-            padding: 0.3rem 1rem;
+            padding: 0.2rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            border: 1px solid rgba(255, 0, 255, 0.3);
         }
 
-        .rating {
-            color: #ffd700;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+        .dancer-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
         }
 
-        .book-btn {
-            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
-            color: #fff;
+        .btn-micro {
+            flex: 1;
+            padding: 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 8px;
             border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
+            cursor: pointer;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .btn-micro:hover {
+            transform: scale(1.05);
+        }
+
+        /* Upload Section - From DanceVerse */
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .upload-card {
+            background: var(--glass);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            opacity: 0.5;
+        }
+
+        .upload-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .upload-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--neon-cyan);
+        }
+
+        .upload-zone {
+            border: 2px dashed rgba(0, 243, 255, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-zone::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .upload-zone:hover::before {
+            transform: translateX(100%);
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .upload-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .upload-preview img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .book-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.5);
+        .upload-ring {
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--neon-cyan), var(--neon-pink), var(--neon-cyan));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
 
-        /* Services */
+        .upload-ring.active {
+            opacity: 1;
+            animation: rotate 3s linear infinite;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Video Exhibits */
+        .exhibits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .exhibit-card {
+            background: var(--glass);
+            border: 1px solid rgba(191, 0, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .exhibit-card:hover {
+            transform: scale(1.02);
+            border-color: var(--neon-purple);
+            box-shadow: 0 15px 35px rgba(191, 0, 255, 0.2);
+        }
+
+        .exhibit-thumbnail {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+        }
+
+        .exhibit-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .exhibit-card:hover .exhibit-thumbnail img {
+            transform: scale(1.1);
+        }
+
+        .play-button {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.4);
+            transition: background 0.3s;
+        }
+
+        .exhibit-card:hover .play-button {
+            background: rgba(0,0,0,0.2);
+        }
+
+        .play-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0, 243, 255, 0.2);
+            border: 2px solid var(--neon-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .exhibit-card:hover .play-icon {
+            transform: scale(1.1);
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        .exhibit-info {
+            padding: 1.5rem;
+        }
+
+        .exhibit-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .exhibit-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Services Grid */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
         }
 
         .service-card {
@@ -414,14 +811,15 @@
             box-shadow: 0 15px 35px rgba(191, 0, 255, 0.2);
         }
 
-        .service-icon {
+        .service-icon-large {
             font-size: 3rem;
             margin-bottom: 1rem;
+            display: block;
         }
 
         .service-card h3 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
             color: var(--neon-purple);
         }
@@ -430,8 +828,8 @@
         .form-container {
             background: var(--glass);
             border: 1px solid rgba(0, 243, 255, 0.2);
-            border-radius: 30px;
-            padding: 3rem;
+            border-radius: 24px;
+            padding: 2.5rem;
             max-width: 700px;
             margin: 0 auto;
             backdrop-filter: blur(10px);
@@ -444,21 +842,23 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: var(--neon-cyan);
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 1rem 1.5rem;
-            border: 2px solid rgba(0, 243, 255, 0.3);
-            border-radius: 15px;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 12px;
             background: rgba(0, 0, 0, 0.3);
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-family: 'Rajdhani', sans-serif;
             transition: all 0.3s;
         }
@@ -471,72 +871,23 @@
             box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
         }
 
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
-            border: none;
-            border-radius: 15px;
-            color: #000;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.5);
-        }
-
-        /* Payment Section */
-        .payment-options {
+        .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
-        .payment-card {
-            background: var(--glass);
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .payment-card:hover {
-            border-color: #00ff88;
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
-        }
-
-        .payment-card.selected {
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-        }
-
-        .payment-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Contact */
+        /* Contact Grid */
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
         }
 
         .contact-card {
@@ -563,12 +914,13 @@
             font-family: 'Orbitron', sans-serif;
             margin-bottom: 0.5rem;
             color: var(--neon-pink);
+            font-size: 1.1rem;
         }
 
         .contact-card a {
             color: #fff;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             transition: color 0.3s;
         }
 
@@ -582,35 +934,35 @@
             border-top: 1px solid rgba(0, 243, 255, 0.2);
             padding: 3rem 5%;
             text-align: center;
-            margin-top: 5rem;
+            margin-top: 4rem;
         }
 
         .footer-logo {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             margin: 2rem 0;
         }
 
         .social-links a {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border: 2px solid var(--neon-cyan);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--neon-cyan);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             transition: all 0.3s;
             text-decoration: none;
         }
@@ -618,18 +970,78 @@
         .social-links a:hover {
             background: var(--neon-cyan);
             color: #000;
-            transform: rotate(360deg);
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-content {
+            max-width: 900px;
+            width: 100%;
+            background: var(--glass);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            transform: rotate(90deg);
         }
 
         /* Success Message */
         .success-message {
             display: none;
-            background: rgba(0, 255, 136, 0.2);
-            border: 2px solid #00ff88;
-            border-radius: 15px;
-            padding: 2rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--neon-green);
+            border-radius: 12px;
+            padding: 1.5rem;
             text-align: center;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .success-message.show {
@@ -638,8 +1050,33 @@
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--glass);
+            border: 1px solid var(--neon-cyan);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 3000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
         }
 
         /* Mobile Responsive */
@@ -652,9 +1089,10 @@
                 width: 100%;
                 background: rgba(5, 5, 8, 0.98);
                 flex-direction: column;
-                padding: 2rem;
-                gap: 1rem;
+                padding: 1.5rem;
+                gap: 0.5rem;
                 border-bottom: 1px solid var(--neon-cyan);
+                backdrop-filter: blur(20px);
             }
 
             .nav-links.active {
@@ -665,13 +1103,9 @@
                 display: block;
             }
 
-            .hero {
-                padding-top: 5rem;
-            }
-
             .logo-ring {
-                width: 180px;
-                height: 180px;
+                width: 150px;
+                height: 150px;
             }
 
             .cta-buttons {
@@ -681,24 +1115,55 @@
 
             .btn {
                 width: 100%;
-                max-width: 300px;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .dancers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-grid {
+                grid-template-columns: 1fr;
             }
 
             .form-container {
-                padding: 2rem 1.5rem;
-            }
-
-            section {
-                padding: 3rem 1rem;
+                padding: 1.5rem;
             }
         }
 
-        /* Loading Animation */
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--neon-cyan), var(--neon-purple));
+            border-radius: 4px;
+        }
+
+        /* Utility Classes */
+        .text-gradient {
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-panel {
+            background: var(--glass);
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
         .loader {
             display: none;
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(0, 243, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 243, 255, 0.2);
             border-top-color: var(--neon-cyan);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -708,278 +1173,552 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(var(--neon-cyan), var(--neon-purple));
-            border-radius: 5px;
-        }
     </style>
 </head>
 <body>
     <div class="bg-animation"></div>
     <div class="particles" id="particles"></div>
+    <div class="bg-grid"></div>
 
+    <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo">FREQUENCY</div>
+            <div class="logo" onclick="navigateTo('home')">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                    </svg>
+                </div>
+                FREQUENCY
+            </div>
             <button class="mobile-menu-btn" onclick="toggleMenu()">☰ MENU</button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home" onclick="closeMenu()">Home</a></li>
-                <li><a href="#dancers" onclick="closeMenu()">Dancers</a></li>
-                <li><a href="#services" onclick="closeMenu()">Services</a></li>
-                <li><a href="#register" onclick="closeMenu()">Join Us</a></li>
-                <li><a href="#book" onclick="closeMenu()">Book Now</a></li>
-                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+                <li><a href="#home" onclick="navigateTo('home')" class="active">Home</a></li>
+                <li><a href="#dancers" onclick="navigateTo('dancers')">Dancers</a></li>
+                <li><a href="#exhibits" onclick="navigateTo('exhibits')">Exhibits</a></li>
+                <li><a href="#services" onclick="navigateTo('services')">Services</a></li>
+                <li><a href="#upload" onclick="navigateTo('upload')">Upload</a></li>
+                <li><a href="#book" onclick="navigateTo('book')">Book Now</a></li>
+                <li><a href="#contact" onclick="navigateTo('contact')">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="logo-ring">
-                <svg class="ring-svg" viewBox="0 0 200 200">
-                    <circle class="ring-particles" cx="100" cy="100" r="90" stroke-dasharray="5,5" opacity="0.8"/>
-                    <circle class="ring-particles" cx="100" cy="100" r="75" stroke-dasharray="3,7" opacity="0.6"/>
-                    <circle class="ring-particles" cx="100" cy="100" r="60" stroke-dasharray="8,4" opacity="0.4"/>
-                </svg>
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="logo-ring">
+                    <svg class="ring-svg" viewBox="0 0 200 200">
+                        <circle class="ring-particles" cx="100" cy="100" r="90" stroke-dasharray="5,5" opacity="0.8"/>
+                        <circle class="ring-particles" cx="100" cy="100" r="75" stroke-dasharray="3,7" opacity="0.6"/>
+                        <circle class="ring-particles" cx="100" cy="100" r="60" stroke-dasharray="8,4" opacity="0.4"/>
+                    </svg>
+                </div>
+                <h1>Frequency Dance Agency</h1>
+                <p class="tagline">The Pulse on Vibes</p>
+                <p>Kenya's premier dance talent hub connecting elite dancers with world-class events, music videos, and commercial shoots.</p>
+                <div class="cta-buttons">
+                    <button onclick="navigateTo('book')" class="btn btn-primary">Book a Dancer</button>
+                    <button onclick="navigateTo('upload')" class="btn btn-secondary">Upload Portfolio</button>
+                    <button onclick="navigateTo('dancers')" class="btn btn-pink">Explore Talent</button>
+                </div>
             </div>
-            <h1>Frequency Dance Agency</h1>
-            <p class="tagline">The Pulse on Vibes</p>
-            <p>Kenya's premier dance talent hub connecting elite dancers with world-class events, music videos, and commercial shoots.</p>
-            <div class="cta-buttons">
-                <a href="#book" class="btn btn-primary">Book a Dancer</a>
-                <a href="#register" class="btn btn-secondary">Join as Dancer</a>
+        </section>
+
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Frequency</h2>
+                <p class="section-subtitle">Connecting Kenya's best dance talent with world-class opportunities</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon-large">🎵</span>
+                    <h3>Music Videos</h3>
+                    <p>Professional choreography and dancers for artist music videos and promotional content.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon-large">🎭</span>
+                    <h3>Live Events</h3>
+                    <p>Corporate events, concerts, festivals, and private performances with top-tier talent.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon-large">📺</span>
+                    <h3>Commercial Shoots</h3>
+                    <p>TV commercials, brand campaigns, and digital content featuring skilled dancers.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon-large">🎓</span>
+                    <h3>Workshops</h3>
+                    <p>Dance classes and choreography sessions led by industry professionals.</p>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="services">
-        <h2 class="section-title">Our Services</h2>
-        <p class="section-subtitle">Professional dance solutions for every occasion</p>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">🎵</div>
-                <h3>Music Videos</h3>
-                <p>Professional choreography and dancers for artist music videos and promotional content.</p>
+    <!-- DANCERS PAGE -->
+    <div id="page-dancers" class="page">
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Featured Dancers</h2>
+                <p class="section-subtitle">Discover and book Kenya's top dance talent</p>
             </div>
-            <div class="service-card">
-                <div class="service-icon">🎭</div>
-                <h3>Live Events</h3>
-                <p>Corporate events, concerts, festivals, and private performances with top-tier talent.</p>
+            
+            <div class="gallery-controls">
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="filterDancers('all')">All Styles</button>
+                    <button class="filter-btn" onclick="filterDancers('afrobeat')">Afrobeat</button>
+                    <button class="filter-btn" onclick="filterDancers('hiphop')">Hip Hop</button>
+                    <button class="filter-btn" onclick="filterDancers('dancehall')">Dancehall</button>
+                    <button class="filter-btn" onclick="filterDancers('contemporary')">Contemporary</button>
+                </div>
+                <button class="btn btn-small btn-primary" onclick="navigateTo('upload')">+ Add Profile</button>
             </div>
-            <div class="service-card">
-                <div class="service-icon">📺</div>
-                <h3>Commercial Shoots</h3>
-                <p>TV commercials, brand campaigns, and digital content featuring skilled dancers.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🎓</div>
-                <h3>Workshops</h3>
-                <p>Dance classes and choreography sessions led by industry professionals.</p>
+
+            <div class="dancers-grid" id="dancersGrid">
+                <!-- Dancer cards injected by JS -->
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="dancers">
-        <h2 class="section-title">Featured Dancers</h2>
-        <p class="section-subtitle">Book our top-rated performers</p>
-        <div class="dancers-grid">
-            <div class="dancer-card">
-                <div class="dancer-avatar">VF</div>
-                <h3>Viper</h3>
-                <span class="dancer-style">Afrobeat</span>
-                <div class="rating">⭐⭐⭐⭐⭐ 4.9</div>
-                <p>High-energy Afrobeat specialist with 5+ years stage experience.</p>
-                <button class="book-btn" onclick="selectDancer('Viper')">Book Now</button>
+    <!-- EXHIBITS PAGE -->
+    <div id="page-exhibits" class="page">
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Video Exhibits</h2>
+                <p class="section-subtitle">Watch performances from our talented roster</p>
             </div>
-            <div class="dancer-card">
-                <div class="dancer-avatar">NF</div>
-                <h3>Nia Flame</h3>
-                <span class="dancer-style">Hip Hop</span>
-                <div class="rating">⭐⭐⭐⭐⭐ 4.8</div>
-                <p>Dynamic hip-hop dancer known for powerful, precise movements.</p>
-                <button class="book-btn" onclick="selectDancer('Nia Flame')">Book Now</button>
-            </div>
-            <div class="dancer-card">
-                <div class="dancer-avatar">SM</div>
-                <h3>Sky Motion</h3>
-                <span class="dancer-style">Dancehall</span>
-                <div class="rating">⭐⭐⭐⭐⭐ 5.0</div>
-                <p>Versatile dancehall artist with international performance credits.</p>
-                <button class="book-btn" onclick="selectDancer('Sky Motion')">Book Now</button>
+            <div class="exhibits-grid" id="exhibitsGrid">
+                <!-- Video exhibits injected by JS -->
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="register">
-        <h2 class="section-title">Join Our Agency</h2>
-        <p class="section-subtitle">Are you a dancer? Register with us today</p>
-        <div class="form-container">
-            <form id="registerForm" action="https://formspree.io/f/mqedonjv" method="POST">
-                <input type="hidden" name="form_type" value="Dancer Registration">
-                <div class="form-group">
-                    <label>Full Name *</label>
-                    <input type="text" name="name" required placeholder="Enter your full name">
+    <!-- SERVICES PAGE -->
+    <div id="page-services" class="page">
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Professional dance solutions for every occasion</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" style="border-color: rgba(0, 243, 255, 0.3);">
+                    <span class="service-icon-large">🎬</span>
+                    <h3 style="color: var(--neon-cyan);">Music Video Production</h3>
+                    <p>Full-service choreography, dancer casting, and on-set direction for music videos. We handle everything from concept to final cut.</p>
+                    <button class="btn btn-small btn-primary" style="margin-top: 1rem;" onclick="navigateTo('book')">Book Now</button>
                 </div>
-                <div class="form-group">
-                    <label>Phone Number *</label>
-                    <input type="tel" name="phone" required placeholder="e.g., 0703248964">
+                <div class="service-card" style="border-color: rgba(255, 0, 255, 0.3);">
+                    <span class="service-icon-large">🎪</span>
+                    <h3 style="color: var(--neon-pink);">Event Performances</h3>
+                    <p>High-energy performances for corporate events, product launches, weddings, and private parties. Custom choreography available.</p>
+                    <button class="btn btn-small btn-pink" style="margin-top: 1rem;" onclick="navigateTo('book')">Book Now</button>
                 </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" name="email" placeholder="your@email.com">
+                <div class="service-card" style="border-color: rgba(191, 0, 255, 0.3);">
+                    <span class="service-icon-large">📱</span>
+                    <h3 style="color: var(--neon-purple);">Commercial & Digital</h3>
+                    <p>TV commercials, social media campaigns, and branded content featuring our diverse roster of dancers.</p>
+                    <button class="btn btn-small btn-primary" style="margin-top: 1rem;" onclick="navigateTo('book')">Book Now</button>
                 </div>
-                <div class="form-group">
-                    <label>Dance Style *</label>
-                    <select name="style" required>
-                        <option value="">Select your style</option>
-                        <option value="Afrobeat">Afrobeat</option>
-                        <option value="Hip Hop">Hip Hop</option>
-                        <option value="Dancehall">Dancehall</option>
-                        <option value="Ballet">Ballet</option>
-                        <option value="Contemporary">Contemporary</option>
-                        <option value="Salsa">Salsa</option>
-                        <option value="Other">Other</option>
-                    </select>
+                <div class="service-card" style="border-color: rgba(0, 255, 136, 0.3);">
+                    <span class="service-icon-large">🏫</span>
+                    <h3 style="color: var(--neon-green);">Masterclasses</h3>
+                    <p>Learn from the best. Weekly workshops in Afrobeat, Hip Hop, Dancehall, and Contemporary styles.</p>
+                    <button class="btn btn-small btn-secondary" style="margin-top: 1rem; border-color: var(--neon-green); color: var(--neon-green);" onclick="showToast('Registration opening soon!')">Coming Soon</button>
                 </div>
-                <div class="form-group">
-                    <label>Years of Experience *</label>
-                    <select name="experience" required>
-                        <option value="">Select experience</option>
-                        <option value="0-1 years">0-1 years</option>
-                        <option value="1-3 years">1-3 years</option>
-                        <option value="3-5 years">3-5 years</option>
-                        <option value="5+ years">5+ years</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Tell us about yourself</label>
-                    <textarea name="message" placeholder="Share your dance background, achievements, and why you want to join..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Submit Application</button>
-                <div class="loader" id="registerLoader"></div>
-            </form>
-            <div class="success-message" id="registerSuccess">
-                <h3>🎉 Application Received!</h3>
-                <p>We'll contact you within 24 hours to discuss next steps.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="book">
-        <h2 class="section-title">Book a Dancer</h2>
-        <p class="section-subtitle">Secure your performer in minutes</p>
-        <div class="form-container">
-            <form id="bookingForm" action="https://formspree.io/f/mqedonjv" method="POST">
-                <input type="hidden" name="form_type" value="Booking Request">
-                <div class="form-group">
-                    <label>Your Name *</label>
-                    <input type="text" name="client_name" required placeholder="Enter your name">
+    <!-- UPLOAD PAGE -->
+    <div id="page-upload" class="page">
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Upload Portfolio</h2>
+                <p class="section-subtitle">Join our agency or showcase your latest work</p>
+            </div>
+            
+            <div class="upload-grid">
+                <!-- Profile Picture Upload -->
+                <div class="upload-card">
+                    <div class="upload-header">
+                        <div class="upload-icon">👤</div>
+                        <h3 class="upload-title">Profile Picture</h3>
+                    </div>
+                    
+                    <div class="upload-preview" id="profilePreview">
+                        <div class="upload-ring" id="profileRing"></div>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'/%3E%3C/svg%3E" 
+                             style="width: 100%; height: 100%; object-fit: cover; opacity: 0.5; padding: 20px;" alt="Profile Preview">
+                    </div>
+
+                    <div class="upload-zone" id="profileZone" onclick="document.getElementById('profileInput').click()" 
+                         ondrop="handleDrop(event, 'profile')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                        <input type="file" id="profileInput" hidden accept="image/*" onchange="handleFileSelect(event, 'profile')">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 8px; color: var(--neon-cyan);">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                        </svg>
+                        <p style="font-size: 0.9rem; margin-bottom: 4px;">Drop photo here or click to browse</p>
+                        <p style="font-size: 0.75rem; opacity: 0.6;">JPG, PNG up to 5MB</p>
+                    </div>
+                    <div class="progress-bar" id="profileProgress">
+                        <div class="progress-fill" id="profileProgressFill"></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Phone Number *</label>
-                    <input type="tel" name="client_phone" required placeholder="e.g., 0703248964">
+
+                <!-- Video Upload -->
+                <div class="upload-card">
+                    <div class="upload-header">
+                        <div class="upload-icon" style="border-color: rgba(255, 0, 255, 0.3);">🎥</div>
+                        <h3 class="upload-title" style="color: var(--neon-pink);">Video Exhibit</h3>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <input type="text" placeholder="Video Title" style="font-size: 0.9rem; padding: 0.6rem 1rem;">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <select style="font-size: 0.9rem; padding: 0.6rem 1rem;">
+                            <option value="">Select Dance Style</option>
+                            <option>Afrobeat</option>
+                            <option>Hip Hop</option>
+                            <option>Dancehall</option>
+                            <option>Contemporary</option>
+                        </select>
+                    </div>
+
+                    <div class="upload-zone" id="videoZone" onclick="document.getElementById('videoInput').click()"
+                         ondrop="handleDrop(event, 'video')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                        <input type="file" id="videoInput" hidden accept="video/*" onchange="handleFileSelect(event, 'video')">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 8px; color: var(--neon-pink);">
+                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                        <p style="font-size: 0.9rem; margin-bottom: 4px;">Drop video here</p>
+                        <p style="font-size: 0.75rem; opacity: 0.6;">MP4, MOV up to 500MB</p>
+                    </div>
+                    <div class="progress-bar" id="videoProgress">
+                        <div class="progress-fill" id="videoProgressFill" style="background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));"></div>
+                    </div>
+
+                    <button class="btn btn-pink" style="width: 100%; margin-top: 1rem; font-size: 0.8rem;" onclick="submitUpload()">Publish Exhibit</button>
                 </div>
-                <div class="form-group">
-                    <label>Email Address *</label>
-                    <input type="email" name="client_email" required placeholder="your@email.com">
+            </div>
+
+            <!-- Registration Form -->
+            <div style="margin-top: 3rem;">
+                <div class="section-header">
+                    <h3 class="section-title" style="font-size: 1.8rem;">Join Our Roster</h3>
+                    <p class="section-subtitle">Are you a dancer? Register with Frequency today</p>
                 </div>
-                <div class="form-group">
-                    <label>Select Dancer (Optional)</label>
-                    <select name="selected_dancer" id="dancerSelect">
-                        <option value="">Any available dancer</option>
-                        <option value="Viper">Viper (Afrobeat)</option>
-                        <option value="Nia Flame">Nia Flame (Hip Hop)</option>
-                        <option value="Sky Motion">Sky Motion (Dancehall)</option>
-                        <option value="Multiple">Multiple Dancers</option>
-                    </select>
+                <div class="form-container">
+                    <form id="registerForm" onsubmit="handleRegister(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name *</label>
+                                <input type="text" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number *</label>
+                                <input type="tel" required placeholder="e.g., 0703248964">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Dance Style *</label>
+                                <select required>
+                                    <option value="">Select your style</option>
+                                    <option>Afrobeat</option>
+                                    <option>Hip Hop</option>
+                                    <option>Dancehall</option>
+                                    <option>Ballet</option>
+                                    <option>Contemporary</option>
+                                    <option>Salsa</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Years of Experience *</label>
+                            <select required>
+                                <option value="">Select experience</option>
+                                <option>0-1 years</option>
+                                <option>1-3 years</option>
+                                <option>3-5 years</option>
+                                <option>5+ years</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tell us about yourself</label>
+                            <textarea placeholder="Share your dance background, achievements, and why you want to join Frequency..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
+                        <div class="loader" id="registerLoader"></div>
+                    </form>
+                    <div class="success-message" id="registerSuccess">
+                        <h3 style="color: var(--neon-green); margin-bottom: 0.5rem;">🎉 Application Received!</h3>
+                        <p>We'll contact you within 24 hours to discuss next steps.</p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Event Type *</label>
-                    <select name="event_type" required>
-                        <option value="">Select event type</option>
-                        <option value="Music Video">Music Video</option>
-                        <option value="Concert/Performance">Concert/Performance</option>
-                        <option value="Corporate Event">Corporate Event</option>
-                        <option value="Private Party">Private Party</option>
-                        <option value="Commercial Shoot">Commercial Shoot</option>
-                        <option value="Workshop">Workshop</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Event Date *</label>
-                    <input type="date" name="event_date" required>
-                </div>
-                <div class="form-group">
-                    <label>Event Location *</label>
-                    <input type="text" name="location" required placeholder="Enter venue/location in Kenya">
-                </div>
-                <div class="form-group">
-                    <label>Additional Details</label>
-                    <textarea name="details" placeholder="Tell us more about your event, budget, specific requirements..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Request Booking</button>
-                <div class="loader" id="bookingLoader"></div>
-            </form>
-            <div class="success-message" id="bookingSuccess">
-                <h3>✅ Booking Request Sent!</h3>
-                <p>We'll confirm availability and pricing within 2 hours.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="contact">
-        <h2 class="section-title">Get In Touch</h2>
-        <p class="section-subtitle">Ready to create something amazing?</p>
-        <div class="contact-grid">
-            <div class="contact-card">
-                <div class="contact-icon">📧</div>
-                <h3>Email Us</h3>
-                <a href="mailto:frequencydanceagencykenya@gmail.com">frequencydanceagencykenya@gmail.com</a>
+    <!-- BOOKING PAGE -->
+    <div id="page-book" class="page">
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Book a Dancer</h2>
+                <p class="section-subtitle">Secure your performer in minutes</p>
             </div>
-            <div class="contact-card">
-                <div class="contact-icon">📱</div>
-                <h3>Call/WhatsApp</h3>
-                <a href="tel:+254703248964">0703 248 964</a>
-            </div>
-            <div class="contact-card">
-                <div class="contact-icon">📍</div>
-                <h3>Location</h3>
-                <p>Kenya</p>
-            </div>
-            <div class="contact-card">
-                <div class="contact-icon">💬</div>
-                <h3>Quick Chat</h3>
-                <a href="https://wa.me/254703248964" target="_blank">WhatsApp Us</a>
+            <div class="form-container">
+                <form id="bookingForm" onsubmit="handleBooking(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Your Name *</label>
+                            <input type="text" name="client_name" required placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" name="client_phone" required placeholder="e.g., 0703248964">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" name="client_email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Select Dancer</label>
+                            <select name="selected_dancer" id="bookingDancerSelect">
+                                <option value="">Any available dancer</option>
+                                <option value="Viper">Viper (Afrobeat)</option>
+                                <option value="Nia Flame">Nia Flame (Hip Hop)</option>
+                                <option value="Sky Motion">Sky Motion (Dancehall)</option>
+                                <option value="Multiple">Multiple Dancers</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Type *</label>
+                            <select name="event_type" required>
+                                <option value="">Select event type</option>
+                                <option>Music Video</option>
+                                <option>Concert/Performance</option>
+                                <option>Corporate Event</option>
+                                <option>Private Party</option>
+                                <option>Commercial Shoot</option>
+                                <option>Workshop</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Event Date *</label>
+                            <input type="date" name="event_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Location *</label>
+                            <input type="text" name="location" required placeholder="Enter venue/location in Kenya">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Details</label>
+                        <textarea name="details" placeholder="Tell us more about your event, budget, specific requirements..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-pink" style="width: 100%;">Request Booking</button>
+                    <div class="loader" id="bookingLoader"></div>
+                </form>
+                <div class="success-message" id="bookingSuccess">
+                    <h3 style="color: var(--neon-green); margin-bottom: 0.5rem;">✅ Booking Request Sent!</h3>
+                    <p>We'll confirm availability and pricing within 2 hours.</p>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
+    <!-- CONTACT PAGE -->
+    <div id="page-contact" class="page">
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Ready to create something amazing?</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email Us</h3>
+                    <a href="mailto:frequencydanceagencykenya@gmail.com">frequencydanceagencykenya@gmail.com</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h3>Call/WhatsApp</h3>
+                    <a href="tel:+254703248964">0703 248 964</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Location</h3>
+                    <p>Nairobi, Kenya</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <h3>Quick Chat</h3>
+                    <a href="https://wa.me/254703248964" target="_blank">WhatsApp Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-logo">FREQUENCY</div>
-        <p>The Pulse on Vibes</p>
+        <p style="color: var(--neon-cyan); font-style: italic; margin-bottom: 1rem;">The Pulse on Vibes</p>
         <div class="social-links">
             <a href="#" title="Instagram">📷</a>
             <a href="#" title="TikTok">🎵</a>
             <a href="#" title="YouTube">▶️</a>
             <a href="https://wa.me/254703248964" title="WhatsApp">💬</a>
         </div>
-        <p>&copy; 2026 Frequency Dance Agency. All rights reserved.</p>
-        <p style="margin-top: 1rem; opacity: 0.7; font-size: 0.9rem;">Till Number: 9332867</p>
+        <p style="opacity: 0.7; font-size: 0.9rem;">&copy; 2026 Frequency Dance Agency. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.5; font-size: 0.8rem;">Till Number: 9332867</p>
     </footer>
 
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <img id="modalImage" src="" alt="" style="width: 100%; display: block;">
+            <div style="padding: 1.5rem;">
+                <h3 id="modalTitle" style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--neon-cyan); margin-bottom: 0.5rem;"></h3>
+                <p id="modalDesc" style="color: rgba(255,255,255,0.7);"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
     <script>
-        // Create floating particles
+        // Data
+        const dancers = [
+            {
+                id: 1,
+                name: "Viper",
+                style: "afrobeat",
+                styleLabel: "Afrobeat",
+                image: "https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800&auto=format&fit=crop&q=80",
+                location: "Nairobi, Kenya",
+                rating: "4.9",
+                verified: true,
+                bio: "High-energy Afrobeat specialist with 5+ years stage experience."
+            },
+            {
+                id: 2,
+                name: "Nia Flame",
+                style: "hiphop",
+                styleLabel: "Hip Hop",
+                image: "https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=800&auto=format&fit=crop&q=80",
+                location: "Nairobi, Kenya",
+                rating: "4.8",
+                verified: true,
+                bio: "Dynamic hip-hop dancer known for powerful, precise movements."
+            },
+            {
+                id: 3,
+                name: "Sky Motion",
+                style: "dancehall",
+                styleLabel: "Dancehall",
+                image: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&auto=format&fit=crop&q=80",
+                location: "Mombasa, Kenya",
+                rating: "5.0",
+                verified: true,
+                bio: "Versatile dancehall artist with international performance credits."
+            },
+            {
+                id: 4,
+                name: "Zara Kente",
+                style: "contemporary",
+                styleLabel: "Contemporary",
+                image: "https://images.unsplash.com/photo-1547153760-18fc86324498?w=800&auto=format&fit=crop&q=80",
+                location: "Nairobi, Kenya",
+                rating: "4.9",
+                verified: false,
+                bio: "Contemporary fusion artist blending traditional and modern styles."
+            },
+            {
+                id: 5,
+                name: "Blaze",
+                style: "hiphop",
+                styleLabel: "Hip Hop",
+                image: "https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?w=800&auto=format&fit=crop&q=80",
+                location: "Kisumu, Kenya",
+                rating: "4.7",
+                verified: true,
+                bio: "Breakdance champion with unique power move combinations."
+            },
+            {
+                id: 6,
+                name: "Amina Soul",
+                style: "afrobeat",
+                styleLabel: "Afrobeat",
+                image: "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?w=800&auto=format&fit=crop&q=80",
+                location: "Nairobi, Kenya",
+                rating: "4.9",
+                verified: true,
+                bio: "Afro-fusion specialist with background in traditional dance."
+            }
+        ];
+
+        const exhibits = [
+            {
+                id: 1,
+                title: "Nairobi Nights",
+                dancer: "Viper",
+                thumbnail: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=800&auto=format&fit=crop&q=80",
+                duration: "3:45",
+                views: "12.5K"
+            },
+            {
+                id: 2,
+                title: "Urban Flow",
+                dancer: "Nia Flame",
+                thumbnail: "https://images.unsplash.com/photo-1547153760-18fc86324498?w=800&auto=format&fit=crop&q=80",
+                duration: "2:30",
+                views: "8.9K"
+            },
+            {
+                id: 3,
+                title: "Coastal Vibes",
+                dancer: "Sky Motion",
+                thumbnail: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&auto=format&fit=crop&q=80",
+                duration: "4:12",
+                views: "25.6K"
+            },
+            {
+                id: 4,
+                title: "Modern Traditions",
+                dancer: "Zara Kente",
+                thumbnail: "https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800&auto=format&fit=crop&q=80",
+                duration: "5:15",
+                views: "6.7K"
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            renderDancers(dancers);
+            renderExhibits();
+            initGSAP();
+            
+            // Set min date for booking
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+        });
+
         function createParticles() {
             const container = document.getElementById('particles');
             for (let i = 0; i < 50; i++) {
@@ -991,88 +1730,310 @@
                 container.appendChild(particle);
             }
         }
-        createParticles();
 
-        // Mobile menu toggle
+        function initGSAP() {
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate cards on scroll
+            gsap.utils.toArray('.dancer-card, .service-card, .exhibit-card').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%",
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    ease: "power3.out"
+                });
+            });
+        }
+
+        // Navigation
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show target page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Update nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + pageId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Close mobile menu
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
         }
 
-        function closeMenu() {
-            document.getElementById('navLinks').classList.remove('active');
+        // Render Functions
+        function renderDancers(dancersToRender) {
+            const grid = document.getElementById('dancersGrid');
+            grid.innerHTML = dancersToRender.map(dancer => `
+                <div class="dancer-card" onclick="openModal('${dancer.image}', '${dancer.name}', '${dancer.styleLabel} • ${dancer.location} • ⭐ ${dancer.rating}')">
+                    <div class="dancer-image-container">
+                        <img src="${dancer.image}" alt="${dancer.name}" class="dancer-image">
+                        <div class="dancer-overlay">
+                            <p style="color: #fff; font-size: 0.9rem; margin-bottom: 1rem;">${dancer.bio}</p>
+                            <button class="btn btn-primary btn-micro" onclick="event.stopPropagation(); bookDancer('${dancer.name}')">Book Now</button>
+                        </div>
+                        ${dancer.verified ? `
+                            <div style="position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; background: var(--neon-cyan); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="black">
+                                    <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                </svg>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="dancer-info">
+                        <div class="dancer-header">
+                            <h3 class="dancer-name">${dancer.name}</h3>
+                        </div>
+                        <div class="dancer-meta">
+                            <span>${dancer.location}</span>
+                            <span style="color: #ffd700;">⭐ ${dancer.rating}</span>
+                        </div>
+                        <span class="dancer-style">${dancer.styleLabel}</span>
+                        <div class="dancer-actions">
+                            <button class="btn btn-primary btn-micro" onclick="event.stopPropagation(); bookDancer('${dancer.name}')">Book</button>
+                            <button class="btn btn-secondary btn-micro" style="flex: 0.5;" onclick="event.stopPropagation(); openModal('${dancer.image}', '${dancer.name}', '${dancer.bio}')">View</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function renderExhibits() {
+            const grid = document.getElementById('exhibitsGrid');
+            grid.innerHTML = exhibits.map(exhibit => `
+                <div class="exhibit-card" onclick="playVideo('
+                <div class="exhibit-card" onclick="playVideo('${exhibit.title}')">
+                    <div class="exhibit-thumbnail">
+                        <img src="${exhibit.thumbnail}" alt="${exhibit.title}">
+                        <div class="play-button">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="exhibit-info">
+                        <h3 class="exhibit-title">${exhibit.title}</h3>
+                        <div class="exhibit-meta">
+                            <span>${exhibit.dancer}</span>
+                            <span>${exhibit.duration} • ${exhibit.views} views</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Functions
+        function filterDancers(style) {
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(style) || (style === 'all' && btn.textContent.includes('All'))) {
+                    btn.classList.add('active');
                 }
             });
+
+            // Filter and render
+            const filtered = style === 'all' ? dancers : dancers.filter(d => d.style === style);
+            
+            // Animate out
+            gsap.to(".dancer-card", {
+                opacity: 0,
+                y: -20,
+                duration: 0.3,
+                onComplete: () => {
+                    renderDancers(filtered);
+                    gsap.fromTo(".dancer-card", 
+                        { opacity: 0, y: 20 },
+                        { opacity: 1, y: 0, duration: 0.4, stagger: 0.05 }
+                    );
+                }
+            });
+        }
+
+        // Upload Handlers
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(e, type) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length) processFile(files[0], type);
+        }
+
+        function handleFileSelect(e, type) {
+            const file = e.target.files[0];
+            if (file) processFile(file, type);
+        }
+
+        function processFile(file, type) {
+            if (type === 'profile') {
+                if (!file.type.startsWith('image/')) {
+                    showToast('Please upload an image file');
+                    return;
+                }
+                
+                // Show loading ring
+                document.getElementById('profileRing').classList.add('active');
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.querySelector('#profilePreview img');
+                    preview.src = e.target.result;
+                    preview.style.opacity = '1';
+                    preview.style.padding = '0';
+                    document.getElementById('profileRing').classList.remove('active');
+                    simulateUpload('profile');
+                };
+                reader.readAsDataURL(file);
+            } else if (type === 'video') {
+                if (!file.type.startsWith('video/')) {
+                    showToast('Please upload a video file');
+                    return;
+                }
+                simulateUpload('video');
+            }
+        }
+
+        function simulateUpload(type) {
+            const progressBar = document.getElementById(type + 'Progress');
+            const progressFill = document.getElementById(type + 'ProgressFill');
+            
+            progressBar.style.display = 'block';
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        progressBar.style.display = 'none';
+                        progressFill.style.width = '0%';
+                        showToast(type === 'profile' ? 'Profile picture uploaded!' : 'Video uploaded successfully!');
+                    }, 500);
+                }
+                progressFill.style.width = progress + '%';
+            }, 200);
+        }
+
+        function submitUpload() {
+            showToast('Exhibit published successfully!');
+            // Add to exhibits
+            const newExhibit = {
+                id: exhibits.length + 1,
+                title: "New Performance",
+                dancer: "You",
+                thumbnail: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=800&auto=format&fit=crop&q=80",
+                duration: "3:00",
+                views: "0"
+            };
+            exhibits.unshift(newExhibit);
+            renderExhibits();
+        }
+
+        // Form Handlers
+        function handleRegister(e) {
+            e.preventDefault();
+            const loader = document.getElementById('registerLoader');
+            const form = document.getElementById('registerForm');
+            const success = document.getElementById('registerSuccess');
+            
+            loader.style.display = 'block';
+            
+            setTimeout(() => {
+                loader.style.display = 'none';
+                form.style.display = 'none';
+                success.classList.add('show');
+                showToast('Application submitted successfully!');
+            }, 1500);
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            const loader = document.getElementById('bookingLoader');
+            const form = document.getElementById('bookingForm');
+            const success = document.getElementById('bookingSuccess');
+            
+            loader.style.display = 'block';
+            
+            setTimeout(() => {
+                loader.style.display = 'none';
+                form.style.display = 'none';
+                success.classList.add('show');
+                showToast('Booking request sent!');
+            }, 1500);
+        }
+
+        // Utility Functions
+        function bookDancer(name) {
+            navigateTo('book');
+            setTimeout(() => {
+                const select = document.getElementById('bookingDancerSelect');
+                if (select) select.value = name;
+            }, 100);
+        }
+
+        function openModal(imageSrc, title, desc) {
+            const modal = document.getElementById('imageModal');
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function playVideo(title) {
+            showToast(`Now playing: ${title}`);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
         });
 
-        // Pre-select dancer from card click
-        function selectDancer(dancerName) {
-            document.getElementById('dancerSelect').value = dancerName;
-            document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Form handling with loading states
-        function handleForm(formId, loaderId, successId) {
-            const form = document.getElementById(formId);
-            const loader = document.getElementById(loaderId);
-            const success = document.getElementById(successId);
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                loader.style.display = 'block';
-
-                try {
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        body: new FormData(form),
-                        headers: { 'Accept': 'application/json' }
-                    });
-
-                    if (response.ok) {
-                        form.style.display = 'none';
-                        success.classList.add('show');
-                        form.reset();
-                    } else {
-                        alert('Something went wrong. Please try again or contact us directly.');
-                    }
-                } catch (error) {
-                    alert('Connection error. Please try again.');
-                } finally {
-                    loader.style.display = 'none';
-                }
-            });
-        }
-
-        handleForm('registerForm', 'registerLoader', 'registerSuccess');
-        handleForm('bookingForm', 'bookingLoader', 'bookingSuccess');
-
-        // Set minimum date to today
-        document.querySelector('input[type="date"]').min = new Date().toISOString().split('T')[0];
-
-        // Add scroll reveal animation
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.dancer-card, .service-card, .contact-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            navigateTo(hash);
         });
     </script>
 </body>
