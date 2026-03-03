@@ -133,6 +133,7 @@
             text-transform: uppercase;
             font-size: 0.85rem;
             letter-spacing: 1px;
+            color: #fff;
         }
         
         .nav-cta:hover {
@@ -548,14 +549,18 @@
             overflow: hidden;
         }
         
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 15px 40px rgba(0, 243, 255, 0.4);
         }
         
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
         .submit-btn.processing {
             pointer-events: none;
-            opacity: 0.8;
         }
         
         .submit-btn::before {
@@ -1379,6 +1384,8 @@
             max-width: 500px;
             width: 90%;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         .booking-form h3 {
@@ -1524,6 +1531,36 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 20px 30px;
+            color: #fff;
+            z-index: 4000;
+            transform: translateX(400px);
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 350px;
+        }
+        
+        .toast.active {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-color: #00ff00;
+        }
+        
+        .toast.error {
+            border-color: #ff0000;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -1582,6 +1619,10 @@
             section {
                 padding: 60px 20px;
             }
+            
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         /* Scrollbar Styling */
@@ -1600,35 +1641,6 @@
         
         ::-webkit-scrollbar-thumb:hover {
             background: var(--neon-pink);
-        }
-        
-        /* Notification Toast */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 15px;
-            padding: 20px 30px;
-            color: #fff;
-            z-index: 4000;
-            transform: translateX(400px);
-            transition: 0.3s;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .toast.active {
-            transform: translateX(0);
-        }
-        
-        .toast.success {
-            border-color: #00ff00;
-        }
-        
-        .toast.error {
-            border-color: #ff0000;
         }
     </style>
 </head>
@@ -1856,9 +1868,9 @@
                     </div>
                     
                     <div class="form-group full-width">
-                        <label>
-                            <input type="checkbox" required style="margin-right: 10px;">
-                            I agree to the Terms of Service and Privacy Policy
+                        <label style="flex-direction: row; align-items: center; cursor: pointer;">
+                            <input type="checkbox" name="terms" required style="margin-right: 10px; width: auto;">
+                            <span>I agree to the Terms of Service and Privacy Policy</span>
                         </label>
                     </div>
                 </div>
@@ -2075,7 +2087,7 @@
         <button class="close-success" onclick="closeSuccess()">Continue</button>
     </div>
 
-    <!-- Video Modal -->
+        <!-- Video Modal -->
     <div class="video-modal" id="videoModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeVideoModal()">×</button>
@@ -2083,10 +2095,10 @@
         </div>
     </div>
 
-        <!-- Booking Modal -->
+    <!-- Booking Modal -->
     <div class="booking-modal" id="bookingModal">
         <div class="booking-modal-content">
-            <button class="close-modal" onclick="closeBookingModal()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,0,0,0.8); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.2rem;">×</button>
+            <button class="close-modal" onclick="closeBookingModal()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,0,0,0.8); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 10;">×</button>
             
             <div class="booking-form">
                 <h3>Book Your Session</h3>
@@ -2098,12 +2110,12 @@
                 </div>
                 
                 <div class="form-group" style="margin-bottom: 20px;">
-                    <label class="required">Select Date</label>
-                    <input type="date" id="modalDate" required style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff;">
+                    <label class="required" style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Select Date</label>
+                    <input type="date" id="modalDate" required style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif;">
                 </div>
                 
                 <div class="form-group" style="margin-bottom: 20px;">
-                    <label class="required">Select Time Slot</label>
+                    <label class="required" style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Select Time Slot</label>
                     <div class="time-slots" id="timeSlots">
                         <button type="button" class="time-slot" onclick="selectTime(this)">9:00 AM</button>
                         <button type="button" class="time-slot" onclick="selectTime(this)">11:00 AM</button>
@@ -2115,21 +2127,21 @@
                 </div>
                 
                 <div class="form-group" style="margin-bottom: 20px;">
-                    <label>Your Name</label>
-                    <input type="text" id="bookerName" placeholder="Enter your full name" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff;">
+                    <label style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Your Name</label>
+                    <input type="text" id="bookerName" placeholder="Enter your full name" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif;">
                 </div>
                 
                 <div class="form-group" style="margin-bottom: 20px;">
-                    <label>Email</label>
-                    <input type="email" id="bookerEmail" placeholder="your@email.com" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff;">
+                    <label style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Email</label>
+                    <input type="email" id="bookerEmail" placeholder="your@email.com" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif;">
                 </div>
                 
                 <div class="form-group" style="margin-bottom: 25px;">
-                    <label>Special Requests</label>
-                    <textarea id="bookerNotes" rows="3" placeholder="Any specific goals or requirements..." style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; resize: vertical;"></textarea>
+                    <label style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Special Requests</label>
+                    <textarea id="bookerNotes" rows="3" placeholder="Any specific goals or requirements..." style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; resize: vertical;"></textarea>
                 </div>
                 
-                <button type="button" class="submit-btn" onclick="confirmBooking()" style="margin-top: 0;">
+                <button type="button" class="submit-btn" onclick="confirmBooking()" style="margin-top: 0; width: 100%;">
                     Confirm Booking
                 </button>
             </div>
@@ -2140,6 +2152,11 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        // Global variables for file storage
+        window.tempPhoto = null;
+        window.tempVideo = null;
+        let currentBookingSession = null;
+
         // Local Storage Database Simulation
         const DB = {
             dancers: JSON.parse(localStorage.getItem('dancers')) || [],
@@ -2254,6 +2271,7 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('Initializing Dance Registry...');
             DB.updateDisplay();
             renderBookings();
             setupUploadZones();
@@ -2262,8 +2280,10 @@
             
             // Set today's date as min for date inputs
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('bookingDate').min = today;
-            document.getElementById('modalDate').min = today;
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            dateInputs.forEach(input => {
+                input.min = today;
+            });
         });
 
         // Navbar scroll effect
@@ -2287,6 +2307,8 @@
 
         function animateValue(id, start, end, duration) {
             const obj = document.getElementById(id);
+            if (!obj) return;
+            
             const range = end - start;
             const increment = end > start ? 1 : -1;
             const stepTime = Math.abs(Math.floor(duration / range)) || 50;
@@ -2307,6 +2329,8 @@
         // Leaderboard Functions
         function renderLeaderboard() {
             const tbody = document.getElementById('leaderboardBody');
+            if (!tbody) return;
+            
             tbody.innerHTML = '';
             
             // Combine registered dancers with sample data for demonstration
@@ -2363,6 +2387,8 @@
         // Booking Functions
         function renderBookings() {
             const grid = document.getElementById('bookingGrid');
+            if (!grid) return;
+            
             grid.innerHTML = '';
             
             const typeFilter = document.getElementById('sessionType')?.value || 'all';
@@ -2376,7 +2402,7 @@
                 card.className = `booking-card ${session.featured ? 'featured' : ''}`;
                 card.innerHTML = `
                     ${session.featured ? '<span class="badge">Featured</span>' : ''}
-                    <img src="${session.image}" alt="${session.title}" class="booking-image">
+                    <img src="${session.image}" alt="${session.title}" class="booking-image" onerror="this.src='https://via.placeholder.com/400x200/0a0a1a/00f3ff?text=Dance+Session'">
                     <div class="booking-content">
                         <div class="booking-header">
                             <div>
@@ -2412,8 +2438,6 @@
         function filterBookings() {
             renderBookings();
         }
-
-        let currentBookingSession = null;
 
         function openBookingModal(sessionId) {
             const session = DB.sessions.find(s => s.id === sessionId);
@@ -2478,49 +2502,57 @@
 
         // Upload Zone Setup
         function setupUploadZones() {
+            console.log('Setting up upload zones...');
+            
             // Photo Upload
             const photoZone = document.getElementById('photoZone');
             const photoInput = document.getElementById('photoInput');
             
-            photoZone.addEventListener('click', () => photoInput.click());
-            photoZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                photoZone.classList.add('dragover');
-            });
-            photoZone.addEventListener('dragleave', () => photoZone.classList.remove('dragover'));
-            photoZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                photoZone.classList.remove('dragover');
-                if (e.dataTransfer.files[0]) handlePhotoUpload(e.dataTransfer.files[0]);
-            });
-            
-            photoInput.addEventListener('change', (e) => {
-                if (e.target.files[0]) handlePhotoUpload(e.target.files[0]);
-            });
+            if (photoZone && photoInput) {
+                photoZone.addEventListener('click', () => photoInput.click());
+                photoZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    photoZone.classList.add('dragover');
+                });
+                photoZone.addEventListener('dragleave', () => photoZone.classList.remove('dragover'));
+                photoZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    photoZone.classList.remove('dragover');
+                    if (e.dataTransfer.files[0]) handlePhotoUpload(e.dataTransfer.files[0]);
+                });
+                
+                photoInput.addEventListener('change', (e) => {
+                    if (e.target.files[0]) handlePhotoUpload(e.target.files[0]);
+                });
+            }
 
             // Video Upload
             const videoZone = document.getElementById('videoZone');
             const videoInput = document.getElementById('videoInput');
             
-            videoZone.addEventListener('click', () => videoInput.click());
-            videoZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                videoZone.classList.add('dragover');
-            });
-            videoZone.addEventListener('dragleave', () => videoZone.classList.remove('dragover'));
-            videoZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                videoZone.classList.remove('dragover');
-                if (e.dataTransfer.files[0]) handleVideoUpload(e.dataTransfer.files[0]);
-            });
-            
-            videoInput.addEventListener('change', (e) => {
-                if (e.target.files[0]) handleVideoUpload(e.target.files[0]);
-            });
+            if (videoZone && videoInput) {
+                videoZone.addEventListener('click', () => videoInput.click());
+                videoZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    videoZone.classList.add('dragover');
+                });
+                videoZone.addEventListener('dragleave', () => videoZone.classList.remove('dragover'));
+                videoZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    videoZone.classList.remove('dragover');
+                    if (e.dataTransfer.files[0]) handleVideoUpload(e.dataTransfer.files[0]);
+                });
+                
+                videoInput.addEventListener('change', (e) => {
+                    if (e.target.files[0]) handleVideoUpload(e.target.files[0]);
+                });
+            }
         }
 
         // Handle Photo Upload
         function handlePhotoUpload(file) {
+            console.log('Handling photo upload:', file.name);
+            
             if (!file.type.startsWith('image/')) {
                 showToast('Please upload an image file', 'error');
                 return;
@@ -2537,20 +2569,26 @@
             const preview = document.getElementById('photoPreview');
             const previewImg = document.getElementById('previewImg');
             
-            progressBar.classList.add('active');
+            if (progressBar) progressBar.classList.add('active');
             
             reader.onprogress = (e) => {
-                if (e.lengthComputable) {
+                if (e.lengthComputable && progressFill) {
                     const percentComplete = (e.loaded / e.total) * 100;
                     progressFill.style.width = percentComplete + '%';
                 }
             };
             
             reader.onload = (e) => {
-                previewImg.src = e.target.result;
-                preview.classList.add('active');
-                progressBar.classList.remove('active');
+                if (previewImg) previewImg.src = e.target.result;
+                if (preview) preview.classList.add('active');
+                if (progressBar) progressBar.classList.remove('active');
                 window.tempPhoto = e.target.result;
+                console.log('Photo loaded successfully');
+            };
+            
+            reader.onerror = () => {
+                showToast('Error reading photo file', 'error');
+                if (progressBar) progressBar.classList.remove('active');
             };
             
             reader.readAsDataURL(file);
@@ -2558,6 +2596,8 @@
 
         // Handle Video Upload
         function handleVideoUpload(file) {
+            console.log('Handling video upload:', file.name);
+            
             if (!file.type.startsWith('video/')) {
                 showToast('Please upload a video file', 'error');
                 return;
@@ -2587,87 +2627,138 @@
                 const previewVideo = document.getElementById('previewVideo');
                 const durationText = document.getElementById('videoDuration');
                 
-                progressBar.classList.add('active');
+                if (progressBar) progressBar.classList.add('active');
                 
                 reader.onprogress = (e) => {
-                    if (e.lengthComputable) {
+                    if (e.lengthComputable && progressFill) {
                         const percentComplete = (e.loaded / e.total) * 100;
                         progressFill.style.width = percentComplete + '%';
                     }
                 };
                 
                 reader.onload = (e) => {
-                    previewVideo.src = e.target.result;
-                    preview.classList.add('active');
-                    progressBar.classList.remove('active');
-                    durationText.textContent = `Duration: ${Math.round(video.duration)}s ✓`;
+                    if (previewVideo) previewVideo.src = e.target.result;
+                    if (preview) preview.classList.add('active');
+                    if (progressBar) progressBar.classList.remove('active');
+                    if (durationText) durationText.textContent = `Duration: ${Math.round(video.duration)}s ✓`;
                     window.tempVideo = e.target.result;
+                    console.log('Video loaded successfully');
+                };
+                
+                reader.onerror = () => {
+                    showToast('Error reading video file', 'error');
+                    if (progressBar) progressBar.classList.remove('active');
                 };
                 
                 reader.readAsDataURL(file);
             };
+            
+            video.onerror = () => {
+                showToast('Error loading video metadata', 'error');
+            };
         }
 
-        // Form Submission
+        // Form Submission - FIXED VERSION
         function setupForm() {
+            console.log('Setting up form...');
             const form = document.getElementById('dancerForm');
             const submitBtn = document.getElementById('submitBtn');
             const loader = document.getElementById('formLoader');
             
+            if (!form) {
+                console.error('Form not found!');
+                return;
+            }
+            
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                console.log('Form submitted');
                 
+                // Validation
                 if (!window.tempPhoto || !window.tempVideo) {
                     showToast('Please upload both a profile photo and video', 'error');
                     return;
                 }
                 
-                submitBtn.classList.add('processing');
-                submitBtn.textContent = 'Processing...';
-                loader.classList.add('active');
+                // Check terms checkbox
+                const termsCheckbox = form.querySelector('input[name="terms"]');
+                if (termsCheckbox && !termsCheckbox.checked) {
+                    showToast('Please agree to the Terms of Service', 'error');
+                    return;
+                }
                 
-                // Simulate server processing
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // Disable button and show loading
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('processing');
+                    submitBtn.textContent = 'Processing...';
+                }
+                if (loader) loader.classList.add('active');
                 
-                const formData = new FormData(form);
-                const dancer = {
-                    id: Date.now(),
-                    name: formData.get('fullName'),
-                    email: formData.get('email'),
-                    style: formData.get('danceStyle'),
-                    experience: formData.get('experience'),
-                    bio: formData.get('bio'),
-                    phone: formData.get('phone'),
-                    instagram: formData.get('instagram'),
-                    photo: window.tempPhoto,
-                    video: window.tempVideo,
-                    score: Math.floor(Math.random() * 200 + 600), // Initial score
-                    registeredAt: new Date().toISOString()
-                };
-                
-                DB.saveDancer(dancer);
-                
-                // Reset form
-                form.reset();
-                document.getElementById('photoPreview').classList.remove('active');
-                document.getElementById('videoPreview').classList.remove('active');
-                window.tempPhoto = null;
-                window.tempVideo = null;
-                
-                submitBtn.classList.remove('processing');
-                submitBtn.textContent = 'Complete Registration';
-                loader.classList.remove('active');
-                document.getElementById('successModal').classList.add('active');
+                try {
+                    // Simulate server processing
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    const formData = new FormData(form);
+                    const dancer = {
+                        id: Date.now(),
+                        name: formData.get('fullName'),
+                        email: formData.get('email'),
+                        style: formData.get('danceStyle'),
+                        experience: formData.get('experience'),
+                        bio: formData.get('bio') || '',
+                        phone: formData.get('phone') || '',
+                        instagram: formData.get('instagram') || '',
+                        photo: window.tempPhoto,
+                        video: window.tempVideo,
+                        score: Math.floor(Math.random() * 200 + 600),
+                        registeredAt: new Date().toISOString()
+                    };
+                    
+                    console.log('Saving dancer:', dancer.name);
+                    
+                    // Save to database
+                    DB.saveDancer(dancer);
+                    
+                    // Reset form
+                    form.reset();
+                    const photoPreview = document.getElementById('photoPreview');
+                    const videoPreview = document.getElementById('videoPreview');
+                    if (photoPreview) photoPreview.classList.remove('active');
+                    if (videoPreview) videoPreview.classList.remove('active');
+                    window.tempPhoto = null;
+                    window.tempVideo = null;
+                    
+                    // Show success modal
+                    const successModal = document.getElementById('successModal');
+                    if (successModal) successModal.classList.add('active');
+                    
+                    showToast('Registration successful!', 'success');
+                    
+                } catch (error) {
+                    console.error('Error during registration:', error);
+                    showToast('An error occurred. Please try again.', 'error');
+                } finally {
+                    // Re-enable button
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('processing');
+                        submitBtn.textContent = 'Complete Registration';
+                    }
+                    if (loader) loader.classList.remove('active');
+                }
             });
         }
 
         // Render Dancers
         function renderDancers() {
             const grid = document.getElementById('dancersGrid');
+            if (!grid) return;
+            
             grid.innerHTML = '';
             
             if (DB.dancers.length === 0) {
-                grid.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.5); grid-column: 1/-1;">No dancers registered yet. Be the first!</p>';
+                grid.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.5); grid-column: 1/-1; padding: 40px;">No dancers registered yet. Be the first!</p>';
                 return;
             }
             
@@ -2675,7 +2766,7 @@
                 const card = document.createElement('div');
                 card.className = 'dancer-card';
                 card.innerHTML = `
-                    <img src="${dancer.photo}" alt="${dancer.name}" class="dancer-image">
+                    <img src="${dancer.photo}" alt="${dancer.name}" class="dancer-image" onerror="this.src='https://via.placeholder.com/300x300/0a0a1a/00f3ff?text=${encodeURIComponent(dancer.name)}'">
                     <div class="dancer-info">
                         <h3 class="dancer-name">${dancer.name}</h3>
                         <span class="dancer-style">${dancer.style}</span>
@@ -2697,28 +2788,37 @@
         function playVideo(videoSrc) {
             const modal = document.getElementById('videoModal');
             const video = document.getElementById('modalVideo');
-            video.src = videoSrc;
-            modal.classList.add('active');
-            video.play();
+            if (modal && video) {
+                video.src = videoSrc;
+                modal.classList.add('active');
+                video.play().catch(e => console.log('Autoplay prevented:', e));
+            }
         }
 
         function closeVideoModal() {
             const modal = document.getElementById('videoModal');
             const video = document.getElementById('modalVideo');
-            video.pause();
-            video.src = '';
-            modal.classList.remove('active');
+            if (video) {
+                video.pause();
+                video.src = '';
+            }
+            if (modal) modal.classList.remove('active');
         }
 
         function closeSuccess() {
-            document.getElementById('successModal').classList.remove('active');
-            document.getElementById('dancers').scrollIntoView({ behavior: 'smooth' });
+            const successModal = document.getElementById('successModal');
+            if (successModal) successModal.classList.remove('active');
+            
+            const dancersSection = document.getElementById('dancers');
+            if (dancersSection) {
+                dancersSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         // Event Registration
         function registerForEvent(eventName) {
             const email = prompt(`Register for ${eventName}!\n\nPlease enter your email:`);
-            if (email) {
+            if (email && email.includes('@')) {
                 const events = JSON.parse(localStorage.getItem('eventRegistrations')) || [];
                 events.push({
                     event: eventName,
@@ -2727,12 +2827,16 @@
                 });
                 localStorage.setItem('eventRegistrations', JSON.stringify(events));
                 showToast(`Successfully registered for ${eventName}!`, 'success');
+            } else if (email) {
+                showToast('Please enter a valid email address', 'error');
             }
         }
 
         // Toast Notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
+            if (!toast) return;
+            
             toast.textContent = message;
             toast.className = `toast ${type} active`;
             
@@ -2743,9 +2847,13 @@
 
         // Smooth Scroll
         function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
+        // Setup smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -2757,12 +2865,12 @@
         });
 
         // Close modals on outside click
-        document.getElementById('videoModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) closeVideoModal();
-        });
-        
-        document.getElementById('bookingModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) closeBookingModal();
+        document.addEventListener('click', (e) => {
+            const videoModal = document.getElementById('videoModal');
+            const bookingModal = document.getElementById('bookingModal');
+            
+            if (e.target === videoModal) closeVideoModal();
+            if (e.target === bookingModal) closeBookingModal();
         });
 
         // Keyboard escape to close modals
@@ -2770,9 +2878,12 @@
             if (e.key === 'Escape') {
                 closeVideoModal();
                 closeBookingModal();
-                document.getElementById('successModal').classList.remove('active');
+                const successModal = document.getElementById('successModal');
+                if (successModal) successModal.classList.remove('active');
             }
         });
+
+        console.log('Dance Registry Pro loaded successfully');
     </script>
 </body>
 </html>
