@@ -207,21 +207,6 @@
 
         // Initializing Leaderboard
         renderLeaderboard();
-        // EMERGENCY FIX: Prevent button from getting stuck
-        document.getElementById('submitBtn').addEventListener('click', function(e) {
-            // If button is clicked and files aren't ready, auto-reset after 3 seconds
-            setTimeout(() => {
-                if (this.disabled && (!window.tempPhoto || !window.tempVideo)) {
-                    console.log('Emergency reset triggered');
-                    this.disabled = false;
-                    this.classList.remove('processing');
-                    this.textContent = 'Complete Registration';
-                    document.getElementById('formLoader').classList.remove('active');
-                    showToast('Please upload both photo and video first!', 'error');
-                }
-            }, 3000);
-        });
-
     </script>
 </body>
 </html>
