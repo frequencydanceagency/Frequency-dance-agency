@@ -2151,25 +2151,37 @@
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
 
-    <script>
+    <!-- Firebase SDK (Modular v9+) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
-       const firebaseConfig = {
-  apiKey: "AIzaSyAJUMqJxCZ2RFFiRqIsYO9-EYgWkkDdiWs",
-  authDomain: "frequency-dance-agency-5b7c9.firebaseapp.com",
-  projectId: "frequency-dance-agency-5b7c9",
-  storageBucket: "frequency-dance-agency-5b7c9.firebasestorage.app",
-  messagingSenderId: "149394055478",
-  appId: "1:149394055478:web:fed774d8213719aa9bd397",
-  measurementId: "G-MY11SE3L06"
-};
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyAJUMqJxCZ2RFFiRqIsYO9-EYgWkkDdiWs",
+    authDomain: "frequency-dance-agency-5b7c9.firebaseapp.com",
+    projectId: "frequency-dance-agency-5b7c9",
+    storageBucket: "frequency-dance-agency-5b7c9.firebasestorage.app",
+    messagingSenderId: "149394055478",
+    appId: "1:149394055478:web:fed774d8213719aa9bd397",
+    measurementId: "G-MY11SE3L06"
+  };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-        // Global variables for file storage
-        window.tempPhoto = null;
-        window.tempVideo = null;
-        let currentBookingSession = null;
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  // Make Firebase services available globally
+  window.firebaseApp = app;
+  window.firebaseDB = db;
+  window.firebaseStorage = storage;
+  
+  console.log('Firebase initialized successfully!');
+</script>
 
         // Local Storage Database Simulation
         const DB = {
