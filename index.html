@@ -2152,6 +2152,20 @@
     <div class="toast" id="toast"></div>
 
     <script>
+
+       const firebaseConfig = {
+  apiKey: "AIzaSyAJUMqJxCZ2RFFiRqIsYO9-EYgWkkDdiWs",
+  authDomain: "frequency-dance-agency-5b7c9.firebaseapp.com",
+  projectId: "frequency-dance-agency-5b7c9",
+  storageBucket: "frequency-dance-agency-5b7c9.firebasestorage.app",
+  messagingSenderId: "149394055478",
+  appId: "1:149394055478:web:fed774d8213719aa9bd397",
+  measurementId: "G-MY11SE3L06"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
         // Global variables for file storage
         window.tempPhoto = null;
         window.tempVideo = null;
