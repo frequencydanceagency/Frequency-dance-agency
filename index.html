@@ -1561,6 +1561,50 @@
             border-color: #ff0000;
         }
         
+        /* Cloudinary Upload Widget Custom Styling */
+        .cloudinary-upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        
+        .cloudinary-upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 243, 255, 0.4);
+        }
+        
+        .upload-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .upload-status.success {
+            display: block;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+        }
+        
+        .upload-status.error {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            color: #ff0000;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -1827,39 +1871,47 @@
                         <input type="text" name="instagram" placeholder="@yourhandle">
                     </div>
                     
+                    <!-- ============================================ -->
+                    <!-- CLOUDINARY PHOTO UPLOAD SECTION - EDIT HERE -->
+                    <!-- ============================================ -->
                     <div class="form-group full-width">
                         <label class="required">Profile Picture</label>
                         <div class="upload-zone" id="photoZone">
                             <div class="upload-icon">📷</div>
-                            <div class="upload-text">Drop your photo here or click to browse</div>
-                            <div class="upload-hint">Supports: JPG, PNG, WebP (Max 5MB)</div>
-                            <input type="file" class="file-input" id="photoInput" name="profilePhoto" 
-                                   accept="image/*" required>
+                            <div class="upload-text">Click to upload your photo</div>
+                            <div class="upload-hint">JPG, PNG supported (Max 10MB)</div>
+                            <button type="button" class="cloudinary-upload-btn" id="photoUploadBtn">
+                                📤 Upload Photo
+                            </button>
                         </div>
+                        <div class="upload-status" id="photoStatus"></div>
                         <div class="preview-container" id="photoPreview">
                             <img class="preview-image" id="previewImg" src="" alt="Profile Preview">
                         </div>
-                        <div class="progress-bar" id="photoProgress">
-                            <div class="progress-fill" id="photoProgressFill"></div>
-                        </div>
+                        <!-- Hidden input to store Cloudinary URL -->
+                        <input type="hidden" id="photoUrl" name="photoUrl" required>
                     </div>
                     
+                    <!-- ============================================ -->
+                    <!-- CLOUDINARY VIDEO UPLOAD SECTION - EDIT HERE -->
+                    <!-- ============================================ -->
                     <div class="form-group full-width">
                         <label class="required">Performance Video (Max 1 minute)</label>
                         <div class="upload-zone" id="videoZone">
                             <div class="upload-icon">🎥</div>
-                            <div class="upload-text">Upload your 1-minute showcase video</div>
-                            <div class="upload-hint">MP4, MOV, WebM formats accepted (Max 100MB, 60 seconds)</div>
-                            <input type="file" class="file-input" id="videoInput" name="performanceVideo" 
-                                   accept="video/*" required>
+                            <div class="upload-text">Click to upload your video</div>
+                            <div class="upload-hint">MP4, MOV supported (Max 100MB, 60 seconds)</div>
+                            <button type="button" class="cloudinary-upload-btn" id="videoUploadBtn">
+                                📤 Upload Video
+                            </button>
                         </div>
+                        <div class="upload-status" id="videoStatus"></div>
                         <div class="preview-container" id="videoPreview">
                             <video class="video-preview" id="previewVideo" controls></video>
                             <p id="videoDuration" style="margin-top: 10px; color: var(--neon-cyan);"></p>
                         </div>
-                        <div class="progress-bar" id="videoProgress">
-                            <div class="progress-fill" id="videoProgressFill"></div>
-                        </div>
+                        <!-- Hidden input to store Cloudinary URL -->
+                        <input type="hidden" id="videoUrl" name="videoUrl" required>
                     </div>
                     
                     <div class="form-group full-width">
@@ -2087,7 +2139,7 @@
         <button class="close-success" onclick="closeSuccess()">Continue</button>
     </div>
 
-        <!-- Video Modal -->
+    <!-- Video Modal -->
     <div class="video-modal" id="videoModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeVideoModal()">×</button>
@@ -2151,52 +2203,135 @@
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
 
-    <!-- Firebase SDK (Modular v9+) -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+    <!-- ============================================ -->
+    <!-- CLOUDINARY WIDGET SCRIPT - ADD THIS -->
+    <!-- ============================================ -->
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 
-  // Your Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyAJUMqJxCZ2RFFiRqIsYO9-EYgWkkDdiWs",
-    authDomain: "frequency-dance-agency-5b7c9.firebaseapp.com",
-    projectId: "frequency-dance-agency-5b7c9",
-    storageBucket: "frequency-dance-agency-5b7c9.firebasestorage.app",
-    messagingSenderId: "149394055478",
-    appId: "1:149394055478:web:fed774d8213719aa9bd397",
-    measurementId: "G-MY11SE3L06"
-  };
+    <!-- ============================================ -->
+    <!-- FIREBASE SDK - ADD THIS -->
+    <!-- ============================================ -->
+    <script type="module">
+        // Import Firebase functions
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        
+        // !! EDIT HERE: Your Firebase configuration !!
+        const firebaseConfig = {
+            apiKey: "AIzaSyAJUMqJxCZ2RFFiRqIsYO9-EYgWkkDdiWs",
+            authDomain: "frequency-dance-agency-5b7c9.firebaseapp.com",
+            projectId: "frequency-dance-agency-5b7c9",
+            storageBucket: "frequency-dance-agency-5b7c9.firebasestorage.app",
+            messagingSenderId: "149394055478",
+            appId: "1:149394055478:web:fed774d8213719aa9bd397",
+            measurementId: "G-MY11SE3L06"
+        };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
-  const storage = getStorage(app);
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        
+        // Make Firebase available globally
+        window.firebaseDB = db;
+        window.firebaseCollection = collection;
+        window.firebaseAddDoc = addDoc;
+        window.firebaseGetDocs = getDocs;
+        window.firebaseQuery = query;
+        window.firebaseOrderBy = orderBy;
+        
+        console.log('✅ Firebase initialized successfully!');
+    </script>
 
-  // Make Firebase services available globally
-  window.firebaseApp = app;
-  window.firebaseDB = db;
-  window.firebaseStorage = storage;
-  
-  console.log('Firebase initialized successfully!');
-</script>
+    <script>
+        // ============================================
+        // CLOUDINARY CONFIGURATION - EDIT HERE
+        // ============================================
+        
+        // !! EDIT HERE: Replace with your Cloudinary Cloud Name !!
+        const CLOUDINARY_CLOUD_NAME = 'your_cloud_name_here'; // <-- REPLACE THIS
+        
+        // !! EDIT HERE: Create an upload preset in your Cloudinary dashboard !!
+        const CLOUDINARY_UPLOAD_PRESET = 'dance_registry'; // <-- REPLACE THIS (or keep if you create this preset)
 
-        // Local Storage Database Simulation
+        // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        let currentBookingSession = null;
+        let photoUploaded = false;
+        let videoUploaded = false;
+
+        // ============================================
+        // DATABASE CLASS - FIREBASE + CLOUDINARY
+        // ============================================
         const DB = {
-            dancers: JSON.parse(localStorage.getItem('dancers')) || [],
-            events: JSON.parse(localStorage.getItem('events')) || [],
+            dancers: [],
             bookings: JSON.parse(localStorage.getItem('bookings')) || [],
             sessions: JSON.parse(localStorage.getItem('sessions')) || generateDefaultSessions(),
             
-            saveDancer(dancer) {
+            async saveDancer(dancer) {
+                console.log('💾 Saving dancer:', dancer.name);
+                
+                try {
+                    if (window.firebaseDB && window.firebaseAddDoc) {
+                        // Save to Firebase Firestore
+                        const docRef = await window.firebaseAddDoc(
+                            window.firebaseCollection(window.firebaseDB, "dancers"), 
+                            dancer
+                        );
+                        console.log('✅ Dancer saved to Firebase with ID:', docRef.id);
+                        dancer.firebaseId = docRef.id;
+                    }
+                } catch (error) {
+                    console.error('❌ Error saving to Firebase:', error);
+                    showToast('Warning: Could not sync to cloud, saved locally only', 'error');
+                }
+                
+                // Also save to localStorage as backup
                 this.dancers.push(dancer);
                 localStorage.setItem('dancers', JSON.stringify(this.dancers));
                 this.updateDisplay();
+                return dancer;
             },
             
-            saveBooking(booking) {
+            async loadDancers() {
+                console.log('📥 Loading dancers from Firebase...');
+                try {
+                    if (window.firebaseDB && window.firebaseGetDocs) {
+                        const q = window.firebaseQuery(
+                            window.firebaseCollection(window.firebaseDB, "dancers"),
+                            window.firebaseOrderBy("registeredAt", "desc")
+                        );
+                        const querySnapshot = await window.firebaseGetDocs(q);
+                        this.dancers = [];
+                        querySnapshot.forEach((doc) => {
+                            this.dancers.push({ id: doc.id, ...doc.data() });
+                        });
+                        console.log('✅ Loaded', this.dancers.length, 'dancers from Firebase');
+                        localStorage.setItem('dancers', JSON.stringify(this.dancers));
+                    }
+                } catch (error) {
+                    console.error('❌ Error loading from Firebase:', error);
+                    this.dancers = JSON.parse(localStorage.getItem('dancers')) || [];
+                }
+                this.updateDisplay();
+                return this.dancers;
+            },
+            
+            async saveBooking(booking) {
+                try {
+                    if (window.firebaseDB && window.firebaseAddDoc) {
+                        await window.firebaseAddDoc(
+                            window.firebaseCollection(window.firebaseDB, "bookings"),
+                            booking
+                        );
+                        console.log('✅ Booking saved to Firebase');
+                    }
+                } catch (error) {
+                    console.error('❌ Error saving booking:', error);
+                }
+                
                 this.bookings.push(booking);
                 localStorage.setItem('bookings', JSON.stringify(this.bookings));
                 updateStats();
@@ -2209,7 +2344,9 @@
             }
         };
 
-        // Generate default booking sessions
+        // ============================================
+        // GENERATE DEFAULT SESSIONS
+        // ============================================
         function generateDefaultSessions() {
             const sessions = [
                 {
@@ -2295,36 +2432,177 @@
             return sessions;
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Initializing Dance Registry...');
-            DB.updateDisplay();
-            renderBookings();
-            setupUploadZones();
-            setupForm();
+        // ============================================
+        // INITIALIZE APP
+        // ============================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('🚀 Initializing Dance Registry with Cloudinary...');
+            
             setupNavbar();
+            setupCloudinaryUploaders();
+            setupForm();
             
             // Set today's date as min for date inputs
             const today = new Date().toISOString().split('T')[0];
-            const dateInputs = document.querySelectorAll('input[type="date"]');
-            dateInputs.forEach(input => {
-                input.min = today;
-            });
+            document.querySelectorAll('input[type="date"]').forEach(input => input.min = today);
+            
+            // Load data
+            await DB.loadDancers();
+            renderBookings();
+            
+            console.log('✅ Dance Registry Pro with Cloudinary loaded successfully!');
         });
 
-        // Navbar scroll effect
+        // ============================================
+        // CLOUDINARY UPLOAD SETUP
+        // ============================================
+        function setupCloudinaryUploaders() {
+            console.log('☁️ Setting up Cloudinary uploaders...');
+            
+            // Photo Uploader
+            const photoBtn = document.getElementById('photoUploadBtn');
+            if (photoBtn) {
+                photoBtn.addEventListener('click', () => openCloudinaryWidget('photo'));
+            }
+            
+            // Video Uploader
+            const videoBtn = document.getElementById('videoUploadBtn');
+            if (videoBtn) {
+                videoBtn.addEventListener('click', () => openCloudinaryWidget('video'));
+            }
+        }
+
+        function openCloudinaryWidget(type) {
+            console.log(`Opening Cloudinary widget for ${type}...`);
+            
+            const isPhoto = type === 'photo';
+            
+            const widgetOptions = {
+                cloudName: CLOUDINARY_CLOUD_NAME,
+                uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+                sources: ['local', 'camera'],
+                multiple: false,
+                maxFiles: 1,
+                
+                // Resource type based on upload type
+                resourceType: isPhoto ? 'image' : 'video',
+                
+                // Client-side constraints
+                maxFileSize: isPhoto ? 10000000 : 100000000, // 10MB for photos, 100MB for videos
+                
+                // For videos, add constraints
+                ...(isPhoto ? {} : {
+                    maxVideoDuration: 60, // 60 seconds max
+                }),
+                
+                // Folder organization
+                folder: `dance_registry/${type}s`,
+                
+                // Transformations on upload
+                transformations: isPhoto ? [
+                    { width: 800, height: 800, crop: 'limit' },
+                    { quality: 'auto' }
+                ] : [
+                    { duration: 60 },
+                    { quality: 'auto' }
+                ],
+                
+                // Styles
+                styles: {
+                    palette: {
+                        window: '#0a0a1a',
+                        windowBorder: '#00f3ff',
+                        tabIcon: '#00f3ff',
+                        menuIcons: '#00f3ff',
+                        textDark: '#ffffff',
+                        textLight: '#ffffff',
+                        link: '#00f3ff',
+                        action: '#ff00ff',
+                        inactiveTabIcon: '#666666',
+                        error: '#ff0000',
+                        inProgress: '#00f3ff',
+                        complete: '#00ff00',
+                        sourceBg: '#0a0a1a'
+                    },
+                    fonts: {
+                        default: {
+                            active: true
+                        }
+                    }
+                }
+            };
+            
+            const widget = cloudinary.createUploadWidget(widgetOptions, (error, result) => {
+                if (error) {
+                    console.error('Cloudinary upload error:', error);
+                    showUploadStatus(type, 'Upload failed: ' + error.message, false);
+                    return;
+                }
+                
+                if (result.event === 'success') {
+                    console.log('✅ Cloudinary upload successful:', result.info);
+                    handleCloudinarySuccess(type, result.info);
+                }
+            });
+            
+            widget.open();
+        }
+
+        function handleCloudinarySuccess(type, info) {
+            const isPhoto = type === 'photo';
+            const url = info.secure_url;
+            
+            if (isPhoto) {
+                // Save URL to hidden input
+                document.getElementById('photoUrl').value = url;
+                photoUploaded = true;
+                
+                // Show preview
+                const previewImg = document.getElementById('previewImg');
+                const previewContainer = document.getElementById('photoPreview');
+                previewImg.src = url;
+                previewContainer.classList.add('active');
+                
+                showUploadStatus('photo', '✅ Photo uploaded successfully!', true);
+            } else {
+                // Save URL to hidden input
+                document.getElementById('videoUrl').value = url;
+                videoUploaded = true;
+                
+                // Show preview
+                const previewVideo = document.getElementById('previewVideo');
+                const previewContainer = document.getElementById('videoPreview');
+                const durationText = document.getElementById('videoDuration');
+                
+                previewVideo.src = url;
+                previewContainer.classList.add('active');
+                if (durationText) durationText.textContent = `Duration: ${Math.round(info.duration || 0)}s ✓`;
+                
+                showUploadStatus('video', '✅ Video uploaded successfully!', true);
+            }
+        }
+
+        function showUploadStatus(type, message, isSuccess) {
+            const statusEl = document.getElementById(`${type}Status`);
+            if (statusEl) {
+                statusEl.textContent = message;
+                statusEl.className = `upload-status ${isSuccess ? 'success' : 'error'}`;
+            }
+        }
+
+        // ============================================
+        // NAVBAR SCROLL EFFECT
+        // ============================================
         function setupNavbar() {
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
             });
         }
 
-        // Update Statistics
+        // ============================================
+        // UPDATE STATISTICS
+        // ============================================
         function updateStats() {
             animateValue('dancerCount', 0, DB.dancers.length, 1000);
             animateValue('eventCount', 0, 4, 1000);
@@ -2352,17 +2630,16 @@
             }, stepTime);
         }
 
-        // Leaderboard Functions
+        // ============================================
+        // LEADERBOARD FUNCTIONS
+        // ============================================
         function renderLeaderboard() {
             const tbody = document.getElementById('leaderboardBody');
             if (!tbody) return;
             
             tbody.innerHTML = '';
             
-            // Combine registered dancers with sample data for demonstration
             const allDancers = [...DB.dancers, ...getSampleLeaderboardData()];
-            
-            // Sort by score
             allDancers.sort((a, b) => (b.score || 0) - (a.score || 0));
             
             allDancers.slice(0, 10).forEach((dancer, index) => {
@@ -2377,7 +2654,7 @@
                 row.innerHTML = `
                     <div class="rank ${rankClass}">${rank}</div>
                     <div class="dancer-info-cell">
-                        <img src="${dancer.photo || 'https://i.pravatar.cc/150?img=' + (index + 10)}" class="dancer-thumb" alt="${dancer.name}">
+                        <img src="${dancer.photo || 'https://i.pravatar.cc/150?img=' + (index + 10)}" class="dancer-thumb" alt="${dancer.name}" onerror="this.src='https://via.placeholder.com/50'">
                         <div>
                             <div class="dancer-name-cell">${dancer.name}</div>
                             <div class="dancer-style-cell">${dancer.style || 'Various'}</div>
@@ -2401,16 +2678,15 @@
         }
 
         function switchTab(style) {
-            // Update active tab
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
-            // Filter logic would go here - for now just re-render
             renderLeaderboard();
             showToast(`Showing ${style === 'all' ? 'all styles' : style} leaderboard`, 'success');
         }
 
-        // Booking Functions
+        // ============================================
+        // BOOKING FUNCTIONS
+        // ============================================
         function renderBookings() {
             const grid = document.getElementById('bookingGrid');
             if (!grid) return;
@@ -2495,7 +2771,7 @@
             btn.classList.add('selected');
         }
 
-        function confirmBooking() {
+        async function confirmBooking() {
             if (!currentBookingSession) return;
             
             const date = document.getElementById('modalDate').value;
@@ -2521,192 +2797,30 @@
                 bookedAt: new Date().toISOString()
             };
             
-            DB.saveBooking(booking);
+            await DB.saveBooking(booking);
             closeBookingModal();
             showToast('Booking confirmed! Check your email for details.', 'success');
         }
 
-        // Upload Zone Setup
-        function setupUploadZones() {
-            console.log('Setting up upload zones...');
-            
-            // Photo Upload
-            const photoZone = document.getElementById('photoZone');
-            const photoInput = document.getElementById('photoInput');
-            
-            if (photoZone && photoInput) {
-                photoZone.addEventListener('click', () => photoInput.click());
-                photoZone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    photoZone.classList.add('dragover');
-                });
-                photoZone.addEventListener('dragleave', () => photoZone.classList.remove('dragover'));
-                photoZone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    photoZone.classList.remove('dragover');
-                    if (e.dataTransfer.files[0]) handlePhotoUpload(e.dataTransfer.files[0]);
-                });
-                
-                photoInput.addEventListener('change', (e) => {
-                    if (e.target.files[0]) handlePhotoUpload(e.target.files[0]);
-                });
-            }
-
-            // Video Upload
-            const videoZone = document.getElementById('videoZone');
-            const videoInput = document.getElementById('videoInput');
-            
-            if (videoZone && videoInput) {
-                videoZone.addEventListener('click', () => videoInput.click());
-                videoZone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    videoZone.classList.add('dragover');
-                });
-                videoZone.addEventListener('dragleave', () => videoZone.classList.remove('dragover'));
-                videoZone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    videoZone.classList.remove('dragover');
-                    if (e.dataTransfer.files[0]) handleVideoUpload(e.dataTransfer.files[0]);
-                });
-                
-                videoInput.addEventListener('change', (e) => {
-                    if (e.target.files[0]) handleVideoUpload(e.target.files[0]);
-                });
-            }
-        }
-
-        // Handle Photo Upload
-        function handlePhotoUpload(file) {
-            console.log('Handling photo upload:', file.name);
-            
-            if (!file.type.startsWith('image/')) {
-                showToast('Please upload an image file', 'error');
-                return;
-            }
-            
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('Image must be less than 5MB', 'error');
-                return;
-            }
-
-            const reader = new FileReader();
-            const progressBar = document.getElementById('photoProgress');
-            const progressFill = document.getElementById('photoProgressFill');
-            const preview = document.getElementById('photoPreview');
-            const previewImg = document.getElementById('previewImg');
-            
-            if (progressBar) progressBar.classList.add('active');
-            
-            reader.onprogress = (e) => {
-                if (e.lengthComputable && progressFill) {
-                    const percentComplete = (e.loaded / e.total) * 100;
-                    progressFill.style.width = percentComplete + '%';
-                }
-            };
-            
-            reader.onload = (e) => {
-                if (previewImg) previewImg.src = e.target.result;
-                if (preview) preview.classList.add('active');
-                if (progressBar) progressBar.classList.remove('active');
-                window.tempPhoto = e.target.result;
-                console.log('Photo loaded successfully');
-            };
-            
-            reader.onerror = () => {
-                showToast('Error reading photo file', 'error');
-                if (progressBar) progressBar.classList.remove('active');
-            };
-            
-            reader.readAsDataURL(file);
-        }
-
-        // Handle Video Upload
-        function handleVideoUpload(file) {
-            console.log('Handling video upload:', file.name);
-            
-            if (!file.type.startsWith('video/')) {
-                showToast('Please upload a video file', 'error');
-                return;
-            }
-            
-            if (file.size > 100 * 1024 * 1024) {
-                showToast('Video must be less than 100MB', 'error');
-                return;
-            }
-
-            const video = document.createElement('video');
-            video.preload = 'metadata';
-            video.src = URL.createObjectURL(file);
-            
-            video.onloadedmetadata = () => {
-                window.URL.revokeObjectURL(video.src);
-                
-                if (video.duration > 60) {
-                    showToast(`Video must be 1 minute or less. Your video is ${Math.round(video.duration)} seconds.`, 'error');
-                    return;
-                }
-                
-                const reader = new FileReader();
-                const progressBar = document.getElementById('videoProgress');
-                const progressFill = document.getElementById('videoProgressFill');
-                const preview = document.getElementById('videoPreview');
-                const previewVideo = document.getElementById('previewVideo');
-                const durationText = document.getElementById('videoDuration');
-                
-                if (progressBar) progressBar.classList.add('active');
-                
-                reader.onprogress = (e) => {
-                    if (e.lengthComputable && progressFill) {
-                        const percentComplete = (e.loaded / e.total) * 100;
-                        progressFill.style.width = percentComplete + '%';
-                    }
-                };
-                
-                reader.onload = (e) => {
-                    if (previewVideo) previewVideo.src = e.target.result;
-                    if (preview) preview.classList.add('active');
-                    if (progressBar) progressBar.classList.remove('active');
-                    if (durationText) durationText.textContent = `Duration: ${Math.round(video.duration)}s ✓`;
-                    window.tempVideo = e.target.result;
-                    console.log('Video loaded successfully');
-                };
-                
-                reader.onerror = () => {
-                    showToast('Error reading video file', 'error');
-                    if (progressBar) progressBar.classList.remove('active');
-                };
-                
-                reader.readAsDataURL(file);
-            };
-            
-            video.onerror = () => {
-                showToast('Error loading video metadata', 'error');
-            };
-        }
-
-        // Form Submission - FIXED VERSION
+        // ============================================
+        // FORM SUBMISSION
+        // ============================================
         function setupForm() {
-            console.log('Setting up form...');
             const form = document.getElementById('dancerForm');
             const submitBtn = document.getElementById('submitBtn');
             const loader = document.getElementById('formLoader');
             
-            if (!form) {
-                console.error('Form not found!');
-                return;
-            }
+            if (!form) return;
             
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                console.log('Form submitted');
                 
                 // Validation
-                if (!window.tempPhoto || !window.tempVideo) {
+                if (!photoUploaded || !videoUploaded) {
                     showToast('Please upload both a profile photo and video', 'error');
                     return;
                 }
                 
-                // Check terms checkbox
                 const termsCheckbox = form.querySelector('input[name="terms"]');
                 if (termsCheckbox && !termsCheckbox.checked) {
                     showToast('Please agree to the Terms of Service', 'error');
@@ -2722,12 +2836,11 @@
                 if (loader) loader.classList.add('active');
                 
                 try {
-                    // Simulate server processing
-                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    await new Promise(resolve => setTimeout(resolve, 1000));
                     
                     const formData = new FormData(form);
                     const dancer = {
-                        id: Date.now(),
+                        id: Date.now().toString(),
                         name: formData.get('fullName'),
                         email: formData.get('email'),
                         style: formData.get('danceStyle'),
@@ -2735,37 +2848,35 @@
                         bio: formData.get('bio') || '',
                         phone: formData.get('phone') || '',
                         instagram: formData.get('instagram') || '',
-                        photo: window.tempPhoto,
-                        video: window.tempVideo,
+                        // Get Cloudinary URLs from hidden inputs
+                        photo: document.getElementById('photoUrl').value,
+                        video: document.getElementById('videoUrl').value,
                         score: Math.floor(Math.random() * 200 + 600),
                         registeredAt: new Date().toISOString()
                     };
                     
-                    console.log('Saving dancer:', dancer.name);
+                    console.log('Saving dancer with Cloudinary media:', dancer);
                     
-                    // Save to database
-                    DB.saveDancer(dancer);
+                    // Save to Firebase + localStorage
+                    await DB.saveDancer(dancer);
                     
                     // Reset form
                     form.reset();
-                    const photoPreview = document.getElementById('photoPreview');
-                    const videoPreview = document.getElementById('videoPreview');
-                    if (photoPreview) photoPreview.classList.remove('active');
-                    if (videoPreview) videoPreview.classList.remove('active');
-                    window.tempPhoto = null;
-                    window.tempVideo = null;
+                    document.getElementById('photoPreview').classList.remove('active');
+                    document.getElementById('videoPreview').classList.remove('active');
+                    document.getElementById('photoStatus').className = 'upload-status';
+                    document.getElementById('videoStatus').className = 'upload-status';
+                    photoUploaded = false;
+                    videoUploaded = false;
                     
-                    // Show success modal
-                    const successModal = document.getElementById('successModal');
-                    if (successModal) successModal.classList.add('active');
-                    
+                    // Show success
+                    document.getElementById('successModal').classList.add('active');
                     showToast('Registration successful!', 'success');
                     
                 } catch (error) {
                     console.error('Error during registration:', error);
                     showToast('An error occurred. Please try again.', 'error');
                 } finally {
-                    // Re-enable button
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.classList.remove('processing');
@@ -2776,7 +2887,9 @@
             });
         }
 
-        // Render Dancers
+        // ============================================
+        // RENDER DANCERS
+        // ============================================
         function renderDancers() {
             const grid = document.getElementById('dancersGrid');
             if (!grid) return;
@@ -2810,7 +2923,9 @@
             });
         }
 
-        // Video Modal Functions
+        // ============================================
+        // VIDEO MODAL FUNCTIONS
+        // ============================================
         function playVideo(videoSrc) {
             const modal = document.getElementById('videoModal');
             const video = document.getElementById('modalVideo');
@@ -2832,16 +2947,13 @@
         }
 
         function closeSuccess() {
-            const successModal = document.getElementById('successModal');
-            if (successModal) successModal.classList.remove('active');
-            
-            const dancersSection = document.getElementById('dancers');
-            if (dancersSection) {
-                dancersSection.scrollIntoView({ behavior: 'smooth' });
-            }
+            document.getElementById('successModal').classList.remove('active');
+            document.getElementById('dancers').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Event Registration
+        // ============================================
+        // EVENT REGISTRATION
+        // ============================================
         function registerForEvent(eventName) {
             const email = prompt(`Register for ${eventName}!\n\nPlease enter your email:`);
             if (email && email.includes('@')) {
@@ -2858,7 +2970,9 @@
             }
         }
 
-        // Toast Notification
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             if (!toast) return;
@@ -2871,7 +2985,9 @@
             }, 3000);
         }
 
-        // Smooth Scroll
+        // ============================================
+        // SMOOTH SCROLL
+        // ============================================
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) {
@@ -2892,11 +3008,8 @@
 
         // Close modals on outside click
         document.addEventListener('click', (e) => {
-            const videoModal = document.getElementById('videoModal');
-            const bookingModal = document.getElementById('bookingModal');
-            
-            if (e.target === videoModal) closeVideoModal();
-            if (e.target === bookingModal) closeBookingModal();
+            if (e.target === document.getElementById('videoModal')) closeVideoModal();
+            if (e.target === document.getElementById('bookingModal')) closeBookingModal();
         });
 
         // Keyboard escape to close modals
@@ -2904,12 +3017,11 @@
             if (e.key === 'Escape') {
                 closeVideoModal();
                 closeBookingModal();
-                const successModal = document.getElementById('successModal');
-                if (successModal) successModal.classList.remove('active');
+                document.getElementById('successModal').classList.remove('active');
             }
         });
 
-        console.log('Dance Registry Pro loaded successfully');
+        console.log('Dance Registry Pro with Cloudinary loaded');
     </script>
 </body>
 </html>
