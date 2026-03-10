@@ -6,13 +6,13 @@
     <title>Dance Registry Pro | Professional Dancer Network & Competition Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         :root {
             --neon-cyan: #00f3ff;
             --neon-pink: #ff00ff;
@@ -22,7 +22,7 @@
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(0, 243, 255, 0.2);
         }
-        
+
         body {
             font-family: 'Rajdhani', sans-serif;
             background: var(--deep-space);
@@ -30,7 +30,7 @@
             overflow-x: hidden;
             line-height: 1.6;
         }
-        
+
         /* Navigation */
         nav {
             position: fixed;
@@ -43,13 +43,13 @@
             border-bottom: 1px solid var(--glass-border);
             transition: all 0.3s ease;
         }
-        
+
         nav.scrolled {
             padding: 15px 50px;
             background: rgba(10, 10, 26, 0.98);
             box-shadow: 0 5px 30px rgba(0, 243, 255, 0.1);
         }
-        
+
         .nav-container {
             display: flex;
             justify-content: space-between;
@@ -57,13 +57,13 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-        
+
         .logo-container {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
+
         .logo-img {
             width: 50px;
             height: 50px;
@@ -72,7 +72,7 @@
             box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
             object-fit: cover;
         }
-        
+
         .logo-text {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
@@ -83,14 +83,14 @@
             text-transform: uppercase;
             letter-spacing: 3px;
         }
-        
+
         .nav-links {
             display: flex;
             gap: 30px;
             list-style: none;
             align-items: center;
         }
-        
+
         .nav-links a {
             color: #fff;
             text-decoration: none;
@@ -101,7 +101,7 @@
             font-size: 0.95rem;
             text-transform: uppercase;
         }
-        
+
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -112,16 +112,16 @@
             background: var(--neon-cyan);
             transition: 0.3s;
         }
-        
+
         .nav-links a:hover::after {
             width: 100%;
         }
-        
+
         .nav-links a:hover {
             color: var(--neon-cyan);
             text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
         }
-        
+
         .nav-cta {
             padding: 10px 25px;
             background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
@@ -135,12 +135,12 @@
             letter-spacing: 1px;
             color: #fff;
         }
-        
+
         .nav-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 243, 255, 0.4);
         }
-        
+
         /* Hero Section with Swirling Circles */
         .hero {
             height: 100vh;
@@ -151,7 +151,7 @@
             overflow: hidden;
             background: radial-gradient(circle at center, #1a1a3e 0%, var(--deep-space) 100%);
         }
-        
+
         .swirl-container {
             position: absolute;
             width: 600px;
@@ -160,14 +160,14 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .swirl-ring {
             position: absolute;
             border: 2px solid transparent;
             border-radius: 50%;
             animation: swirl 20s linear infinite;
         }
-        
+
         .swirl-ring:nth-child(1) {
             width: 200px;
             height: 200px;
@@ -175,7 +175,7 @@
             border-right-color: var(--neon-pink);
             animation-duration: 15s;
         }
-        
+
         .swirl-ring:nth-child(2) {
             width: 300px;
             height: 300px;
@@ -184,7 +184,7 @@
             animation-duration: 20s;
             animation-direction: reverse;
         }
-        
+
         .swirl-ring:nth-child(3) {
             width: 400px;
             height: 400px;
@@ -192,7 +192,7 @@
             border-bottom-color: var(--neon-purple);
             animation-duration: 25s;
         }
-        
+
         .swirl-ring:nth-child(4) {
             width: 500px;
             height: 500px;
@@ -201,12 +201,12 @@
             animation-duration: 30s;
             animation-direction: reverse;
         }
-        
+
         @keyframes swirl {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
         /* Central Logo */
         .center-logo {
             position: relative;
@@ -223,26 +223,26 @@
             animation: pulse 3s ease-in-out infinite;
             overflow: hidden;
         }
-        
+
         .center-logo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
         }
-        
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 50px rgba(0, 243, 255, 0.5); }
             50% { transform: scale(1.05); box-shadow: 0 0 80px rgba(0, 243, 255, 0.8); }
         }
-        
+
         .hero-content {
             position: relative;
             z-index: 20;
             text-align: center;
             margin-top: 400px;
         }
-        
+
         .hero h1 {
             font-family: 'Orbitron', sans-serif;
             font-size: 4rem;
@@ -255,19 +255,19 @@
             -webkit-text-fill-color: transparent;
             animation: gradient 5s ease infinite;
         }
-        
+
         @keyframes gradient {
             0%, 100% { filter: hue-rotate(0deg); }
             50% { filter: hue-rotate(30deg); }
         }
-        
+
         .hero p {
             font-size: 1.3rem;
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 40px;
             letter-spacing: 2px;
         }
-        
+
         .cta-button {
             display: inline-block;
             padding: 15px 40px;
@@ -283,13 +283,13 @@
             text-transform: uppercase;
             box-shadow: 0 10px 30px rgba(0, 243, 255, 0.3);
         }
-        
+
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 20px 40px rgba(0, 243, 255, 0.5);
             border-color: #fff;
         }
-        
+
         /* Stats Counter */
         .stats-bar {
             display: flex;
@@ -298,7 +298,7 @@
             margin-top: 50px;
             flex-wrap: wrap;
         }
-        
+
         .stat-item {
             text-align: center;
             padding: 20px;
@@ -308,7 +308,7 @@
             min-width: 150px;
             backdrop-filter: blur(10px);
         }
-        
+
         .stat-number {
             font-family: 'Orbitron', sans-serif;
             font-size: 2.5rem;
@@ -317,7 +317,7 @@
             display: block;
             text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
         }
-        
+
         .stat-label {
             color: rgba(255, 255, 255, 0.7);
             text-transform: uppercase;
@@ -325,13 +325,13 @@
             font-size: 0.85rem;
             margin-top: 5px;
         }
-        
+
         /* Section Styling */
         section {
             padding: 100px 50px;
             position: relative;
         }
-        
+
         .section-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 2.8rem;
@@ -343,7 +343,7 @@
             text-transform: uppercase;
             position: relative;
         }
-        
+
         .section-title::after {
             content: '';
             display: block;
@@ -353,7 +353,7 @@
             margin: 20px auto;
             border-radius: 2px;
         }
-        
+
         .section-subtitle {
             text-align: center;
             color: rgba(255, 255, 255, 0.7);
@@ -361,12 +361,12 @@
             margin-bottom: 50px;
             font-size: 1.1rem;
         }
-        
+
         /* Registration Section */
         .registration-section {
             background: linear-gradient(180deg, var(--deep-space) 0%, #0f0f2e 100%);
         }
-        
+
         .registration-container {
             max-width: 900px;
             margin: 0 auto;
@@ -377,23 +377,23 @@
             border: 1px solid var(--glass-border);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
-        
+
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin-bottom: 30px;
         }
-        
+
         .form-group {
             display: flex;
             flex-direction: column;
         }
-        
+
         .form-group.full-width {
             grid-column: 1 / -1;
         }
-        
+
         .form-group label {
             font-weight: 700;
             margin-bottom: 10px;
@@ -405,13 +405,13 @@
             align-items: center;
             gap: 5px;
         }
-        
+
         .required::after {
             content: '*';
             color: var(--neon-pink);
             margin-left: 5px;
         }
-        
+
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -424,7 +424,7 @@
             font-size: 1rem;
             transition: 0.3s;
         }
-        
+
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -432,12 +432,12 @@
             border-color: var(--neon-cyan);
             box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
         }
-        
+
         .form-group select option {
             background: var(--deep-space);
             color: #fff;
         }
-        
+
         /* Profile Picture Upload */
         .upload-zone {
             border: 2px dashed rgba(0, 243, 255, 0.5);
@@ -450,47 +450,47 @@
             overflow: hidden;
             background: rgba(0, 0, 0, 0.2);
         }
-        
+
         .upload-zone:hover {
             border-color: var(--neon-cyan);
             background: rgba(0, 243, 255, 0.05);
         }
-        
+
         .upload-zone.dragover {
             border-color: var(--neon-pink);
             background: rgba(255, 0, 255, 0.1);
         }
-        
+
         .upload-icon {
             font-size: 3rem;
             margin-bottom: 15px;
             color: var(--neon-cyan);
         }
-        
+
         .upload-text {
             font-size: 1.1rem;
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 10px;
         }
-        
+
         .upload-hint {
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.5);
         }
-        
+
         .file-input {
             display: none;
         }
-        
+
         .preview-container {
             margin-top: 20px;
             display: none;
         }
-        
+
         .preview-container.active {
             display: block;
         }
-        
+
         .preview-image {
             width: 150px;
             height: 150px;
@@ -499,7 +499,7 @@
             border: 3px solid var(--neon-cyan);
             box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
         }
-        
+
         .video-preview {
             width: 100%;
             max-width: 400px;
@@ -507,7 +507,7 @@
             border: 2px solid var(--neon-pink);
             box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
         }
-        
+
         .progress-bar {
             width: 100%;
             height: 6px;
@@ -517,11 +517,11 @@
             overflow: hidden;
             display: none;
         }
-        
+
         .progress-bar.active {
             display: block;
         }
-        
+
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
@@ -529,7 +529,7 @@
             transition: width 0.3s;
             border-radius: 3px;
         }
-        
+
         .submit-btn {
             width: 100%;
             padding: 20px;
@@ -548,21 +548,21 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .submit-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 15px 40px rgba(0, 243, 255, 0.4);
         }
-        
+
         .submit-btn:disabled {
             opacity: 0.7;
             cursor: not-allowed;
         }
-        
+
         .submit-btn.processing {
             pointer-events: none;
         }
-        
+
         .submit-btn::before {
             content: '';
             position: absolute;
@@ -573,21 +573,21 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: 0.5s;
         }
-        
+
         .submit-btn:hover::before {
             left: 100%;
         }
-        
+
         /* Leaderboard Section */
         .leaderboard-section {
             background: linear-gradient(180deg, #0f0f2e 0%, var(--deep-space) 100%);
         }
-        
+
         .leaderboard-container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         .leaderboard-tabs {
             display: flex;
             justify-content: center;
@@ -595,7 +595,7 @@
             margin-bottom: 40px;
             flex-wrap: wrap;
         }
-        
+
         .tab-btn {
             padding: 12px 30px;
             background: transparent;
@@ -609,18 +609,18 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .tab-btn.active {
             background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
             border-color: transparent;
             box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3);
         }
-        
+
         .tab-btn:hover {
             border-color: var(--neon-cyan);
             color: var(--neon-cyan);
         }
-        
+
         .leaderboard-table {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -629,7 +629,7 @@
             border: 1px solid var(--glass-border);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-        
+
         .leaderboard-header {
             display: grid;
             grid-template-columns: 80px 1fr 150px 150px 120px;
@@ -641,7 +641,7 @@
             letter-spacing: 1px;
             color: var(--neon-cyan);
         }
-        
+
         .leaderboard-row {
             display: grid;
             grid-template-columns: 80px 1fr 150px 150px 120px;
@@ -650,33 +650,33 @@
             transition: 0.3s;
             align-items: center;
         }
-        
+
         .leaderboard-row:hover {
             background: rgba(0, 243, 255, 0.05);
             transform: translateX(10px);
         }
-        
+
         .leaderboard-row.top-3 {
             background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
         }
-        
+
         .rank {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
             font-weight: 900;
             text-align: center;
         }
-        
+
         .rank.gold { color: var(--neon-gold); text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
         .rank.silver { color: #c0c0c0; text-shadow: 0 0 20px rgba(192, 192, 192, 0.5); }
         .rank.bronze { color: #cd7f32; text-shadow: 0 0 20px rgba(205, 127, 50, 0.5); }
-        
+
         .dancer-info-cell {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
+
         .dancer-thumb {
             width: 50px;
             height: 50px;
@@ -684,24 +684,24 @@
             object-fit: cover;
             border: 2px solid var(--neon-cyan);
         }
-        
+
         .dancer-name-cell {
             font-weight: 700;
             color: #fff;
         }
-        
+
         .dancer-style-cell {
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.6);
         }
-        
+
         .score {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.2rem;
             color: var(--neon-pink);
             font-weight: 700;
         }
-        
+
         .trend {
             display: inline-flex;
             align-items: center;
@@ -711,17 +711,17 @@
             font-size: 0.85rem;
             font-weight: 600;
         }
-        
+
         .trend.up {
             background: rgba(0, 255, 0, 0.2);
             color: #00ff00;
         }
-        
+
         .trend.down {
             background: rgba(255, 0, 0, 0.2);
             color: #ff0000;
         }
-        
+
         .action-btn {
             padding: 8px 20px;
             background: transparent;
@@ -732,22 +732,22 @@
             transition: 0.3s;
             font-weight: 600;
         }
-        
+
         .action-btn:hover {
             background: var(--neon-cyan);
             color: #000;
         }
-        
+
         /* Booking Section */
         .booking-section {
             background: var(--deep-space);
         }
-        
+
         .booking-container {
             max-width: 1400px;
             margin: 0 auto;
         }
-        
+
         .booking-filters {
             display: flex;
             gap: 20px;
@@ -755,20 +755,20 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-        
+
         .filter-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
-        
+
         .filter-group label {
             color: var(--neon-cyan);
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .filter-group select,
         .filter-group input {
             padding: 12px 20px;
@@ -779,13 +779,13 @@
             font-family: 'Rajdhani', sans-serif;
             min-width: 200px;
         }
-        
+
         .booking-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
-        
+
         .booking-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -795,57 +795,57 @@
             transition: 0.3s;
             position: relative;
         }
-        
+
         .booking-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 243, 255, 0.2);
             border-color: var(--neon-cyan);
         }
-        
+
         .booking-card.featured {
             border-color: var(--neon-gold);
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
         }
-        
+
         .booking-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
             border-bottom: 2px solid var(--glass-border);
         }
-        
+
         .booking-content {
             padding: 25px;
         }
-        
+
         .booking-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
             margin-bottom: 15px;
         }
-        
+
         .booking-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.3rem;
             color: var(--neon-cyan);
             margin-bottom: 5px;
         }
-        
+
         .booking-price {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
             color: var(--neon-gold);
             font-weight: 700;
         }
-        
+
         .booking-meta {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
             flex-wrap: wrap;
         }
-        
+
         .meta-item {
             display: flex;
             align-items: center;
@@ -853,18 +853,18 @@
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
         }
-        
+
         .booking-description {
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             margin-bottom: 20px;
         }
-        
+
         .booking-features {
             list-style: none;
             margin-bottom: 20px;
         }
-        
+
         .booking-features li {
             padding: 5px 0;
             color: rgba(255, 255, 255, 0.7);
@@ -873,13 +873,13 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .booking-features li::before {
             content: '✓';
             color: var(--neon-cyan);
             font-weight: bold;
         }
-        
+
         .booking-btn {
             width: 100%;
             padding: 15px;
@@ -894,17 +894,17 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .booking-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 5px 20px rgba(0, 243, 255, 0.4);
         }
-        
+
         .booking-btn.sold-out {
             background: rgba(255, 0, 0, 0.3);
             cursor: not-allowed;
         }
-        
+
         .badge {
             position: absolute;
             top: 20px;
@@ -917,12 +917,12 @@
             font-size: 0.8rem;
             text-transform: uppercase;
         }
-        
+
         /* Dancers Gallery */
         .dancers-section {
             background: linear-gradient(180deg, var(--deep-space) 0%, #0f0f2e 100%);
         }
-        
+
         .dancers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -930,7 +930,7 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-        
+
         .dancer-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -940,31 +940,31 @@
             transition: 0.3s;
             position: relative;
         }
-        
+
         .dancer-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 243, 255, 0.2);
             border-color: var(--neon-cyan);
         }
-        
+
         .dancer-image {
             width: 100%;
             height: 300px;
             object-fit: cover;
             border-bottom: 2px solid rgba(0, 243, 255, 0.3);
         }
-        
+
         .dancer-info {
             padding: 25px;
         }
-        
+
         .dancer-name {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.4rem;
             margin-bottom: 10px;
             color: var(--neon-cyan);
         }
-        
+
         .dancer-style {
             display: inline-block;
             padding: 5px 15px;
@@ -975,13 +975,13 @@
             color: var(--neon-pink);
             margin-bottom: 15px;
         }
-        
+
         .dancer-bio {
             color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
             margin-bottom: 15px;
         }
-        
+
         .dancer-stats {
             display: flex;
             gap: 20px;
@@ -989,7 +989,7 @@
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.6);
         }
-        
+
         .watch-video-btn {
             display: inline-flex;
             align-items: center;
@@ -1006,24 +1006,24 @@
             width: 100%;
             justify-content: center;
         }
-        
+
         .watch-video-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 20px rgba(255, 0, 255, 0.4);
         }
-        
+
         /* Events Section */
         .events-section {
             background: linear-gradient(180deg, #0f0f2e 0%, var(--deep-space) 100%);
             min-height: 100vh;
         }
-        
+
         .events-timeline {
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
         }
-        
+
         .events-timeline::before {
             content: '';
             position: absolute;
@@ -1034,7 +1034,7 @@
             background: linear-gradient(180deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
             box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
         }
-        
+
         .event-card {
             display: flex;
             margin-bottom: 50px;
@@ -1043,24 +1043,24 @@
             transform: translateY(50px);
             animation: slideUp 0.6s ease forwards;
         }
-        
+
         .event-card:nth-child(odd) {
             flex-direction: row-reverse;
             text-align: right;
         }
-        
+
         .event-card:nth-child(1) { animation-delay: 0.1s; }
         .event-card:nth-child(2) { animation-delay: 0.2s; }
         .event-card:nth-child(3) { animation-delay: 0.3s; }
         .event-card:nth-child(4) { animation-delay: 0.4s; }
-        
+
         @keyframes slideUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .event-content {
             width: 45%;
             background: var(--glass-bg);
@@ -1071,12 +1071,12 @@
             position: relative;
             transition: 0.3s;
         }
-        
+
         .event-content:hover {
             transform: scale(1.02);
             box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
         }
-        
+
         .event-date {
             position: absolute;
             left: 50%;
@@ -1096,24 +1096,24 @@
             box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
             z-index: 10;
         }
-        
+
         .event-day {
             font-size: 1.5rem;
             line-height: 1;
         }
-        
+
         .event-month {
             font-size: 0.8rem;
             text-transform: uppercase;
         }
-        
+
         .event-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
             margin-bottom: 10px;
             color: var(--neon-cyan);
         }
-        
+
         .event-location {
             color: var(--neon-pink);
             margin-bottom: 15px;
@@ -1122,28 +1122,28 @@
             gap: 8px;
             font-weight: 600;
         }
-        
+
         .event-card:nth-child(odd) .event-location {
             justify-content: flex-end;
         }
-        
+
         .event-description {
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             margin-bottom: 20px;
         }
-        
+
         .event-meta {
             display: flex;
             gap: 20px;
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.6);
         }
-        
+
         .event-card:nth-child(odd) .event-meta {
             justify-content: flex-end;
         }
-        
+
         .register-event-btn {
             margin-top: 15px;
             padding: 10px 25px;
@@ -1158,19 +1158,19 @@
             text-transform: uppercase;
             font-size: 0.85rem;
         }
-        
+
         .register-event-btn:hover {
             background: var(--neon-cyan);
             color: #000;
             box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
         }
-        
+
         /* Testimonials Section */
         .testimonials-section {
             background: var(--deep-space);
             padding: 100px 50px;
         }
-        
+
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -1178,7 +1178,7 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-        
+
         .testimonial-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -1187,7 +1187,7 @@
             border: 1px solid var(--glass-border);
             position: relative;
         }
-        
+
         .testimonial-card::before {
             content: '"';
             position: absolute;
@@ -1198,7 +1198,7 @@
             opacity: 0.3;
             font-family: serif;
         }
-        
+
         .testimonial-text {
             color: rgba(255, 255, 255, 0.9);
             line-height: 1.8;
@@ -1207,13 +1207,13 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .testimonial-author {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
+
         .author-avatar {
             width: 50px;
             height: 50px;
@@ -1221,23 +1221,23 @@
             border: 2px solid var(--neon-cyan);
             object-fit: cover;
         }
-        
+
         .author-info h4 {
             color: var(--neon-cyan);
             font-family: 'Orbitron', sans-serif;
             margin-bottom: 5px;
         }
-        
+
         .author-info p {
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
         }
-        
+
         .rating {
             color: var(--neon-gold);
             margin-top: 5px;
         }
-        
+
         /* Success Message */
         .success-message {
             display: none;
@@ -1255,35 +1255,35 @@
             text-align: center;
             min-width: 400px;
         }
-        
+
         .success-message.active {
             display: block;
             animation: popIn 0.5s ease;
         }
-        
+
         @keyframes popIn {
             0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
-        
+
         .success-icon {
             font-size: 4rem;
             color: var(--neon-cyan);
             margin-bottom: 20px;
         }
-        
+
         .success-message h3 {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
             margin-bottom: 15px;
             color: var(--neon-cyan);
         }
-        
+
         .success-message p {
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 30px;
         }
-        
+
         .close-success {
             padding: 12px 30px;
             background: transparent;
@@ -1294,12 +1294,12 @@
             font-family: 'Orbitron', sans-serif;
             transition: 0.3s;
         }
-        
+
         .close-success:hover {
             background: var(--neon-cyan);
             color: #000;
         }
-        
+
         /* Video Modal */
         .video-modal {
             display: none;
@@ -1314,11 +1314,11 @@
             justify-content: center;
             backdrop-filter: blur(10px);
         }
-        
+
         .video-modal.active {
             display: flex;
         }
-        
+
         .modal-content {
             position: relative;
             max-width: 800px;
@@ -1329,7 +1329,7 @@
             border: 2px solid var(--neon-cyan);
             box-shadow: 0 0 60px rgba(0, 243, 255, 0.3);
         }
-        
+
         .close-modal {
             position: absolute;
             top: 20px;
@@ -1345,17 +1345,17 @@
             z-index: 10;
             transition: 0.3s;
         }
-        
+
         .close-modal:hover {
             transform: rotate(90deg);
             background: #ff0000;
         }
-        
+
         .modal-video {
             width: 100%;
             display: block;
         }
-        
+
         /* Booking Modal */
         .booking-modal {
             display: none;
@@ -1370,11 +1370,11 @@
             justify-content: center;
             backdrop-filter: blur(10px);
         }
-        
+
         .booking-modal.active {
             display: flex;
         }
-        
+
         .booking-modal-content {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -1387,14 +1387,14 @@
             max-height: 90vh;
             overflow-y: auto;
         }
-        
+
         .booking-form h3 {
             font-family: 'Orbitron', sans-serif;
             color: var(--neon-cyan);
             margin-bottom: 25px;
             text-align: center;
         }
-        
+
         .booking-summary {
             background: rgba(0, 0, 0, 0.3);
             padding: 20px;
@@ -1402,24 +1402,24 @@
             margin-bottom: 25px;
             border: 1px solid var(--glass-border);
         }
-        
+
         .booking-summary h4 {
             color: var(--neon-gold);
             margin-bottom: 10px;
         }
-        
+
         .booking-summary p {
             color: rgba(255, 255, 255, 0.8);
             font-size: 0.95rem;
         }
-        
+
         .time-slots {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin-bottom: 20px;
         }
-        
+
         .time-slot {
             padding: 10px;
             background: transparent;
@@ -1431,26 +1431,26 @@
             text-align: center;
             font-size: 0.9rem;
         }
-        
+
         .time-slot:hover,
         .time-slot.selected {
             background: var(--neon-cyan);
             color: #000;
             border-color: var(--neon-cyan);
         }
-        
+
         .time-slot.disabled {
             opacity: 0.3;
             cursor: not-allowed;
         }
-        
+
         /* Footer */
         footer {
             padding: 60px 50px 30px;
             background: #050510;
             border-top: 1px solid var(--glass-border);
         }
-        
+
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -1459,14 +1459,14 @@
             gap: 40px;
             margin-bottom: 40px;
         }
-        
+
         .footer-section h4 {
             font-family: 'Orbitron', sans-serif;
             color: var(--neon-cyan);
             margin-bottom: 20px;
             font-size: 1.2rem;
         }
-        
+
         .footer-section p,
         .footer-section a {
             color: rgba(255, 255, 255, 0.6);
@@ -1474,17 +1474,17 @@
             line-height: 1.8;
             transition: 0.3s;
         }
-        
+
         .footer-section a:hover {
             color: var(--neon-cyan);
         }
-        
+
         .social-links {
             display: flex;
             gap: 15px;
             margin-top: 20px;
         }
-        
+
         .social-links a {
             width: 40px;
             height: 40px;
@@ -1496,13 +1496,13 @@
             color: var(--neon-cyan);
             transition: 0.3s;
         }
-        
+
         .social-links a:hover {
             background: var(--neon-cyan);
             color: #000;
             transform: translateY(-3px);
         }
-        
+
         .footer-bottom {
             text-align: center;
             padding-top: 30px;
@@ -1510,7 +1510,7 @@
             color: rgba(255, 255, 255, 0.4);
             font-size: 0.9rem;
         }
-        
+
         /* Loading Animation */
         .loader {
             display: none;
@@ -1522,15 +1522,15 @@
             animation: spin 1s ease-in-out infinite;
             margin: 20px auto;
         }
-        
+
         .loader.active {
             display: block;
         }
-        
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
+
         /* Toast Notification */
         .toast {
             position: fixed;
@@ -1548,19 +1548,19 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             max-width: 350px;
         }
-        
+
         .toast.active {
             transform: translateX(0);
         }
-        
+
         .toast.success {
             border-color: #00ff00;
         }
-        
+
         .toast.error {
             border-color: #ff0000;
         }
-        
+
         /* Cloudinary Upload Widget Custom Styling */
         .cloudinary-upload-btn {
             display: inline-flex;
@@ -1577,12 +1577,12 @@
             transition: 0.3s;
             margin-top: 10px;
         }
-        
+
         .cloudinary-upload-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 243, 255, 0.4);
         }
-        
+
         .upload-status {
             margin-top: 10px;
             padding: 10px;
@@ -1590,99 +1590,99 @@
             font-size: 0.9rem;
             display: none;
         }
-        
+
         .upload-status.success {
             display: block;
             background: rgba(0, 255, 0, 0.1);
             border: 1px solid #00ff00;
             color: #00ff00;
         }
-        
+
         .upload-status.error {
             display: block;
             background: rgba(255, 0, 0, 0.1);
             border: 1px solid #ff0000;
             color: #ff0000;
         }
-        
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
-            
+
             .hero h1 {
                 font-size: 2.5rem;
             }
-            
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .leaderboard-header,
             .leaderboard-row {
                 grid-template-columns: 50px 1fr 80px;
                 font-size: 0.9rem;
             }
-            
+
             .leaderboard-header > :nth-child(3),
             .leaderboard-row > :nth-child(4),
             .leaderboard-row > :nth-child(5) {
                 display: none;
             }
-            
+
             .events-timeline::before {
                 left: 30px;
             }
-            
+
             .event-card,
             .event-card:nth-child(odd) {
                 flex-direction: column;
                 text-align: left;
                 padding-left: 80px;
             }
-            
+
             .event-content {
                 width: 100%;
             }
-            
+
             .event-date {
                 left: 30px;
                 transform: translateX(-50%);
             }
-            
+
             .event-card:nth-child(odd) .event-location,
             .event-card:nth-child(odd) .event-meta {
                 justify-content: flex-start;
             }
-            
+
             .booking-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             section {
                 padding: 60px 20px;
             }
-            
+
             .time-slots {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-        
+
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
             width: 10px;
         }
-        
+
         ::-webkit-scrollbar-track {
             background: var(--deep-space);
         }
-        
+
         ::-webkit-scrollbar-thumb {
             background: var(--neon-cyan);
             border-radius: 5px;
         }
-        
+
         ::-webkit-scrollbar-thumb:hover {
             background: var(--neon-pink);
         }
@@ -1715,18 +1715,18 @@
             <div class="swirl-ring"></div>
             <div class="swirl-ring"></div>
             <div class="swirl-ring"></div>
-            
+
             <!-- Central Logo -->
             <div class="center-logo">
                 <img src="logo.png" alt="Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'50\' cy=\'20\' r=\'8\' fill=\'#00f3ff\'/><path d=\'M50 28 L50 50 M50 35 L35 25 M50 35 L65 25 M50 50 L35 70 M50 50 L65 70\' stroke=\'#00f3ff\' stroke-width=\'3\' fill=\'none\' stroke-linecap=\'round\'/><circle cx=\'50\' cy=\'50\' r=\'45\' stroke=\'#ff00ff\' stroke-width=\'2\' fill=\'none\' stroke-dasharray=\'10 5\' opacity=\'0.8\'><animateTransform attributeName=\'transform\' type=\'rotate\' from=\'0 50 50\' to=\'360 50 50\' dur=\'10s\' repeatCount=\'indefinite\'/></circle></svg>'">
             </div>
         </div>
-        
+
         <div class="hero-content">
             <h1>Join The Movement</h1>
             <p>Register • Compete • Book • Perform</p>
             <a href="#register" class="cta-button">Start Your Journey</a>
-            
+
             <div class="stats-bar">
                 <div class="stat-item">
                     <span class="stat-number" id="dancerCount">0</span>
@@ -1752,7 +1752,7 @@
     <section class="leaderboard-section" id="leaderboard">
         <h2 class="section-title">Competition Leaderboard</h2>
         <p class="section-subtitle">Top performers ranked by audience votes, competition wins, and skill ratings</p>
-        
+
         <div class="leaderboard-container">
             <div class="leaderboard-tabs">
                 <button class="tab-btn active" onclick="switchTab('all')">All Styles</button>
@@ -1761,7 +1761,7 @@
                 <button class="tab-btn" onclick="switchTab('ballet')">Ballet</button>
                 <button class="tab-btn" onclick="switchTab('latin')">Latin</button>
             </div>
-            
+
             <div class="leaderboard-table" id="leaderboardTable">
                 <div class="leaderboard-header">
                     <div>Rank</div>
@@ -1781,7 +1781,7 @@
     <section class="booking-section" id="booking">
         <h2 class="section-title">Book a Session</h2>
         <p class="section-subtitle">Private lessons, group workshops, and studio rentals with world-class instructors</p>
-        
+
         <div class="booking-container">
             <div class="booking-filters">
                 <div class="filter-group">
@@ -1809,7 +1809,7 @@
                     <input type="date" id="bookingDate" onchange="filterBookings()">
                 </div>
             </div>
-            
+
             <div class="booking-grid" id="bookingGrid">
                 <!-- Populated by JavaScript -->
             </div>
@@ -1819,7 +1819,7 @@
     <!-- Registration Section -->
     <section class="registration-section" id="register">
         <h2 class="section-title">Dancer Registration</h2>
-        
+
         <div class="registration-container">
             <form id="dancerForm" enctype="multipart/form-data">
                 <div class="form-grid">
@@ -1827,12 +1827,12 @@
                         <label class="required">Full Name</label>
                         <input type="text" name="fullName" required placeholder="Enter your full name">
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="required">Email Address</label>
                         <input type="email" name="email" required placeholder="your@email.com">
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="required">Dance Style</label>
                         <select name="danceStyle" required>
@@ -1849,7 +1849,7 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="required">Experience Level</label>
                         <select name="experience" required>
@@ -1860,17 +1860,17 @@
                             <option value="Professional">Professional (10+ years)</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Phone Number</label>
                         <input type="tel" name="phone" placeholder="+1 (555) 123-4567">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Instagram Handle</label>
                         <input type="text" name="instagram" placeholder="@yourhandle">
                     </div>
-                    
+
                     <!-- ============================================ -->
                     <!-- CLOUDINARY PHOTO UPLOAD SECTION - EDIT HERE -->
                     <!-- ============================================ -->
@@ -1891,7 +1891,7 @@
                         <!-- Hidden input to store Cloudinary URL -->
                         <input type="hidden" id="photoUrl" name="photoUrl" required>
                     </div>
-                    
+
                     <!-- ============================================ -->
                     <!-- CLOUDINARY VIDEO UPLOAD SECTION - EDIT HERE -->
                     <!-- ============================================ -->
@@ -1913,12 +1913,12 @@
                         <!-- Hidden input to store Cloudinary URL -->
                         <input type="hidden" id="videoUrl" name="videoUrl" required>
                     </div>
-                    
+
                     <div class="form-group full-width">
                         <label>Bio / Introduction</label>
                         <textarea name="bio" rows="4" placeholder="Tell us about your dance journey, achievements, and goals..."></textarea>
                     </div>
-                    
+
                     <div class="form-group full-width">
                         <label style="flex-direction: row; align-items: center; cursor: pointer;">
                             <input type="checkbox" name="terms" required style="margin-right: 10px; width: auto;">
@@ -1926,7 +1926,7 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <button type="submit" class="submit-btn" id="submitBtn">
                     Complete Registration
                 </button>
@@ -1948,7 +1948,7 @@
     <section class="events-section" id="events">
         <h2 class="section-title">Upcoming Events</h2>
         <p class="section-subtitle">Competitions, workshops, and showcases</p>
-        
+
         <div class="events-timeline">
             <div class="event-card">
                 <div class="event-content">
@@ -1969,7 +1969,7 @@
                     <div class="event-month">MAR</div>
                 </div>
             </div>
-            
+
             <div class="event-card">
                 <div class="event-content">
                     <h3 class="event-title">Contemporary Fusion Workshop</h3>
@@ -1989,7 +1989,7 @@
                     <div class="event-month">MAR</div>
                 </div>
             </div>
-            
+
             <div class="event-card">
                 <div class="event-content">
                     <h3 class="event-title">Spring Showcase Gala</h3>
@@ -2009,7 +2009,7 @@
                     <div class="event-month">APR</div>
                 </div>
             </div>
-            
+
             <div class="event-card">
                 <div class="event-content">
                     <h3 class="event-title">Latin Heat Festival</h3>
@@ -2051,7 +2051,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="testimonial-card">
                 <p class="testimonial-text">
                     As a ballet instructor, I needed a reliable way to manage bookings and showcase my work. 
@@ -2067,7 +2067,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="testimonial-card">
                 <p class="testimonial-text">
                     The leaderboard feature pushed me to improve constantly. Seeing my ranking rise based on 
@@ -2100,7 +2100,7 @@
                     <a href="#">📧</a>
                 </div>
             </div>
-            
+
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <p><a href="#register">Register as Dancer</a></p>
@@ -2108,7 +2108,7 @@
                 <p><a href="#leaderboard">Leaderboard</a></p>
                 <p><a href="#events">Upcoming Events</a></p>
             </div>
-            
+
             <div class="footer-section">
                 <h4>Support</h4>
                 <p><a href="#">Help Center</a></p>
@@ -2116,7 +2116,7 @@
                 <p><a href="#">Privacy Policy</a></p>
                 <p><a href="#">Contact Us</a></p>
             </div>
-            
+
             <div class="footer-section">
                 <h4>Contact</h4>
                 <p>📍 123 Dance Street, NYC</p>
@@ -2125,7 +2125,7 @@
                 <p>🕐 24/7 Automated Support</p>
             </div>
         </div>
-        
+
         <div class="footer-bottom">
             <p>© 2026 Dance Registry Pro. All rights reserved. | Automated Dancer Management System</p>
         </div>
@@ -2151,21 +2151,21 @@
     <div class="booking-modal" id="bookingModal">
         <div class="booking-modal-content">
             <button class="close-modal" onclick="closeBookingModal()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,0,0,0.8); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 10;">×</button>
-            
+
             <div class="booking-form">
                 <h3>Book Your Session</h3>
-                
+
                 <div class="booking-summary" id="bookingSummary">
                     <h4 id="summaryTitle">Session Title</h4>
                     <p id="summaryDetails">Instructor • Style • Duration</p>
                     <p id="summaryPrice" style="color: var(--neon-gold); font-size: 1.3rem; margin-top: 10px;">$0</p>
                 </div>
-                
+
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label class="required" style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Select Date</label>
                     <input type="date" id="modalDate" required style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif;">
                 </div>
-                
+
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label class="required" style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Select Time Slot</label>
                     <div class="time-slots" id="timeSlots">
@@ -2177,22 +2177,22 @@
                         <button type="button" class="time-slot" onclick="selectTime(this)">8:00 PM</button>
                     </div>
                 </div>
-                
+
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Your Name</label>
                     <input type="text" id="bookerName" placeholder="Enter your full name" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif;">
                 </div>
-                
+
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Email</label>
                     <input type="email" id="bookerEmail" placeholder="your@email.com" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif;">
                 </div>
-                
+
                 <div class="form-group" style="margin-bottom: 25px;">
                     <label style="color: var(--neon-cyan); text-transform: uppercase; font-size: 0.9rem; margin-bottom: 8px; display: block;">Special Requests</label>
                     <textarea id="bookerNotes" rows="3" placeholder="Any specific goals or requirements..." style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; font-family: 'Rajdhani', sans-serif; resize: vertical;"></textarea>
                 </div>
-                
+
                 <button type="button" class="submit-btn" onclick="confirmBooking()" style="margin-top: 0; width: 100%;">
                     Confirm Booking
                 </button>
@@ -2216,7 +2216,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        
+
         // !! EDIT HERE: Your Firebase configuration !!
         const firebaseConfig = {
             apiKey: "AIzaSyAJUMqJxCZ2RFFiRqIsYO9-EYgWkkDdiWs",
@@ -2232,7 +2232,7 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
-        
+
         // Make Firebase available globally
         window.firebaseDB = db;
         window.firebaseCollection = collection;
@@ -2240,7 +2240,7 @@
         window.firebaseGetDocs = getDocs;
         window.firebaseQuery = query;
         window.firebaseOrderBy = orderBy;
-        
+
         console.log('✅ Firebase initialized successfully!');
     </script>
 
@@ -2248,10 +2248,10 @@
         // ============================================
         // CLOUDINARY CONFIGURATION - EDIT HERE
         // ============================================
-        
+
         // !! EDIT HERE: Replace with your Cloudinary Cloud Name !!
-        const CLOUDINARY_CLOUD_NAME = 'your_cloud_name_here'; // <-- REPLACE THIS
-        
+        const CLOUDINARY_CLOUD_NAME = 'dbobmm7by'; // <-- REPLACE THIS
+
         // !! EDIT HERE: Create an upload preset in your Cloudinary dashboard !!
         const CLOUDINARY_UPLOAD_PRESET = 'dance_registry'; // <-- REPLACE THIS (or keep if you create this preset)
 
@@ -2269,10 +2269,10 @@
             dancers: [],
             bookings: JSON.parse(localStorage.getItem('bookings')) || [],
             sessions: JSON.parse(localStorage.getItem('sessions')) || generateDefaultSessions(),
-            
+
             async saveDancer(dancer) {
                 console.log('💾 Saving dancer:', dancer.name);
-                
+
                 try {
                     if (window.firebaseDB && window.firebaseAddDoc) {
                         // Save to Firebase Firestore
@@ -2287,14 +2287,14 @@
                     console.error('❌ Error saving to Firebase:', error);
                     showToast('Warning: Could not sync to cloud, saved locally only', 'error');
                 }
-                
+
                 // Also save to localStorage as backup
                 this.dancers.push(dancer);
                 localStorage.setItem('dancers', JSON.stringify(this.dancers));
                 this.updateDisplay();
                 return dancer;
             },
-            
+
             async loadDancers() {
                 console.log('📥 Loading dancers from Firebase...');
                 try {
@@ -2318,7 +2318,7 @@
                 this.updateDisplay();
                 return this.dancers;
             },
-            
+
             async saveBooking(booking) {
                 try {
                     if (window.firebaseDB && window.firebaseAddDoc) {
@@ -2331,12 +2331,12 @@
                 } catch (error) {
                     console.error('❌ Error saving booking:', error);
                 }
-                
+
                 this.bookings.push(booking);
                 localStorage.setItem('bookings', JSON.stringify(this.bookings));
                 updateStats();
             },
-            
+
             updateDisplay() {
                 renderDancers();
                 renderLeaderboard();
@@ -2437,19 +2437,19 @@
         // ============================================
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('🚀 Initializing Dance Registry with Cloudinary...');
-            
+
             setupNavbar();
             setupCloudinaryUploaders();
             setupForm();
-            
+
             // Set today's date as min for date inputs
             const today = new Date().toISOString().split('T')[0];
             document.querySelectorAll('input[type="date"]').forEach(input => input.min = today);
-            
+
             // Load data
             await DB.loadDancers();
             renderBookings();
-            
+
             console.log('✅ Dance Registry Pro with Cloudinary loaded successfully!');
         });
 
@@ -2458,13 +2458,13 @@
         // ============================================
         function setupCloudinaryUploaders() {
             console.log('☁️ Setting up Cloudinary uploaders...');
-            
+
             // Photo Uploader
             const photoBtn = document.getElementById('photoUploadBtn');
             if (photoBtn) {
                 photoBtn.addEventListener('click', () => openCloudinaryWidget('photo'));
             }
-            
+
             // Video Uploader
             const videoBtn = document.getElementById('videoUploadBtn');
             if (videoBtn) {
@@ -2474,30 +2474,30 @@
 
         function openCloudinaryWidget(type) {
             console.log(`Opening Cloudinary widget for ${type}...`);
-            
+
             const isPhoto = type === 'photo';
-            
+
             const widgetOptions = {
                 cloudName: CLOUDINARY_CLOUD_NAME,
                 uploadPreset: CLOUDINARY_UPLOAD_PRESET,
                 sources: ['local', 'camera'],
                 multiple: false,
                 maxFiles: 1,
-                
+
                 // Resource type based on upload type
                 resourceType: isPhoto ? 'image' : 'video',
-                
+
                 // Client-side constraints
                 maxFileSize: isPhoto ? 10000000 : 100000000, // 10MB for photos, 100MB for videos
-                
+
                 // For videos, add constraints
                 ...(isPhoto ? {} : {
                     maxVideoDuration: 60, // 60 seconds max
                 }),
-                
+
                 // Folder organization
                 folder: `dance_registry/${type}s`,
-                
+
                 // Transformations on upload
                 transformations: isPhoto ? [
                     { width: 800, height: 800, crop: 'limit' },
@@ -2506,7 +2506,7 @@
                     { duration: 60 },
                     { quality: 'auto' }
                 ],
-                
+
                 // Styles
                 styles: {
                     palette: {
@@ -2531,53 +2531,53 @@
                     }
                 }
             };
-            
+
             const widget = cloudinary.createUploadWidget(widgetOptions, (error, result) => {
                 if (error) {
                     console.error('Cloudinary upload error:', error);
                     showUploadStatus(type, 'Upload failed: ' + error.message, false);
                     return;
                 }
-                
+
                 if (result.event === 'success') {
                     console.log('✅ Cloudinary upload successful:', result.info);
                     handleCloudinarySuccess(type, result.info);
                 }
             });
-            
+
             widget.open();
         }
 
         function handleCloudinarySuccess(type, info) {
             const isPhoto = type === 'photo';
             const url = info.secure_url;
-            
+
             if (isPhoto) {
                 // Save URL to hidden input
                 document.getElementById('photoUrl').value = url;
                 photoUploaded = true;
-                
+
                 // Show preview
                 const previewImg = document.getElementById('previewImg');
                 const previewContainer = document.getElementById('photoPreview');
                 previewImg.src = url;
                 previewContainer.classList.add('active');
-                
+
                 showUploadStatus('photo', '✅ Photo uploaded successfully!', true);
             } else {
                 // Save URL to hidden input
                 document.getElementById('videoUrl').value = url;
                 videoUploaded = true;
-                
+
                 // Show preview
                 const previewVideo = document.getElementById('previewVideo');
                 const previewContainer = document.getElementById('videoPreview');
                 const durationText = document.getElementById('videoDuration');
-                
+
                 previewVideo.src = url;
                 previewContainer.classList.add('active');
                 if (durationText) durationText.textContent = `Duration: ${Math.round(info.duration || 0)}s ✓`;
-                
+
                 showUploadStatus('video', '✅ Video uploaded successfully!', true);
             }
         }
@@ -2612,17 +2612,17 @@
         function animateValue(id, start, end, duration) {
             const obj = document.getElementById(id);
             if (!obj) return;
-            
+
             const range = end - start;
             const increment = end > start ? 1 : -1;
             const stepTime = Math.abs(Math.floor(duration / range)) || 50;
             let current = start;
-            
+
             if (range === 0) {
                 obj.textContent = end;
                 return;
             }
-            
+
             const timer = setInterval(() => {
                 current += increment;
                 obj.textContent = current;
@@ -2636,21 +2636,21 @@
         function renderLeaderboard() {
             const tbody = document.getElementById('leaderboardBody');
             if (!tbody) return;
-            
+
             tbody.innerHTML = '';
-            
+
             const allDancers = [...DB.dancers, ...getSampleLeaderboardData()];
             allDancers.sort((a, b) => (b.score || 0) - (a.score || 0));
-            
+
             allDancers.slice(0, 10).forEach((dancer, index) => {
                 const rank = index + 1;
                 const row = document.createElement('div');
                 row.className = `leaderboard-row ${rank <= 3 ? 'top-3' : ''}`;
-                
+
                 const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
                 const trend = Math.random() > 0.5 ? 'up' : 'down';
                 const trendIcon = trend === 'up' ? '↑' : '↓';
-                
+
                 row.innerHTML = `
                     <div class="rank ${rankClass}">${rank}</div>
                     <div class="dancer-info-cell">
@@ -2664,7 +2664,7 @@
                     <div class="score">${dancer.score || Math.floor(Math.random() * 500 + 800)}</div>
                     <div class="trend ${trend}">${trendIcon} ${Math.floor(Math.random() * 20 + 1)}</div>
                 `;
-                
+
                 tbody.appendChild(row);
             });
         }
@@ -2690,16 +2690,16 @@
         function renderBookings() {
             const grid = document.getElementById('bookingGrid');
             if (!grid) return;
-            
+
             grid.innerHTML = '';
-            
+
             const typeFilter = document.getElementById('sessionType')?.value || 'all';
             const styleFilter = document.getElementById('bookingStyle')?.value || 'all';
-            
+
             DB.sessions.forEach(session => {
                 if (typeFilter !== 'all' && session.type !== typeFilter) return;
                 if (styleFilter !== 'all' && session.style !== styleFilter) return;
-                
+
                 const card = document.createElement('div');
                 card.className = `booking-card ${session.featured ? 'featured' : ''}`;
                 card.innerHTML = `
@@ -2732,7 +2732,7 @@
                         </button>
                     </div>
                 `;
-                
+
                 grid.appendChild(card);
             });
         }
@@ -2744,20 +2744,20 @@
         function openBookingModal(sessionId) {
             const session = DB.sessions.find(s => s.id === sessionId);
             if (!session) return;
-            
+
             currentBookingSession = session;
-            
+
             document.getElementById('summaryTitle').textContent = session.title;
             document.getElementById('summaryDetails').textContent = `${session.instructor} • ${session.style} • ${session.duration}`;
             document.getElementById('summaryPrice').textContent = `$${session.price}`;
-            
+
             document.getElementById('bookingModal').classList.add('active');
         }
 
         function closeBookingModal() {
             document.getElementById('bookingModal').classList.remove('active');
             currentBookingSession = null;
-            
+
             // Reset form
             document.getElementById('modalDate').value = '';
             document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
@@ -2773,17 +2773,17 @@
 
         async function confirmBooking() {
             if (!currentBookingSession) return;
-            
+
             const date = document.getElementById('modalDate').value;
             const selectedTime = document.querySelector('.time-slot.selected');
             const name = document.getElementById('bookerName').value;
             const email = document.getElementById('bookerEmail').value;
-            
+
             if (!date || !selectedTime || !name || !email) {
                 showToast('Please fill in all required fields', 'error');
                 return;
             }
-            
+
             const booking = {
                 id: Date.now(),
                 sessionId: currentBookingSession.id,
@@ -2796,7 +2796,7 @@
                 price: currentBookingSession.price,
                 bookedAt: new Date().toISOString()
             };
-            
+
             await DB.saveBooking(booking);
             closeBookingModal();
             showToast('Booking confirmed! Check your email for details.', 'success');
@@ -2809,24 +2809,24 @@
             const form = document.getElementById('dancerForm');
             const submitBtn = document.getElementById('submitBtn');
             const loader = document.getElementById('formLoader');
-            
+
             if (!form) return;
-            
+
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                
+
                 // Validation
                 if (!photoUploaded || !videoUploaded) {
                     showToast('Please upload both a profile photo and video', 'error');
                     return;
                 }
-                
+
                 const termsCheckbox = form.querySelector('input[name="terms"]');
                 if (termsCheckbox && !termsCheckbox.checked) {
                     showToast('Please agree to the Terms of Service', 'error');
                     return;
                 }
-                
+
                 // Disable button and show loading
                 if (submitBtn) {
                     submitBtn.disabled = true;
@@ -2834,10 +2834,10 @@
                     submitBtn.textContent = 'Processing...';
                 }
                 if (loader) loader.classList.add('active');
-                
+
                 try {
                     await new Promise(resolve => setTimeout(resolve, 1000));
-                    
+
                     const formData = new FormData(form);
                     const dancer = {
                         id: Date.now().toString(),
@@ -2854,12 +2854,12 @@
                         score: Math.floor(Math.random() * 200 + 600),
                         registeredAt: new Date().toISOString()
                     };
-                    
+
                     console.log('Saving dancer with Cloudinary media:', dancer);
-                    
+
                     // Save to Firebase + localStorage
                     await DB.saveDancer(dancer);
-                    
+
                     // Reset form
                     form.reset();
                     document.getElementById('photoPreview').classList.remove('active');
@@ -2868,11 +2868,11 @@
                     document.getElementById('videoStatus').className = 'upload-status';
                     photoUploaded = false;
                     videoUploaded = false;
-                    
+
                     // Show success
                     document.getElementById('successModal').classList.add('active');
                     showToast('Registration successful!', 'success');
-                    
+
                 } catch (error) {
                     console.error('Error during registration:', error);
                     showToast('An error occurred. Please try again.', 'error');
@@ -2893,14 +2893,14 @@
         function renderDancers() {
             const grid = document.getElementById('dancersGrid');
             if (!grid) return;
-            
+
             grid.innerHTML = '';
-            
+
             if (DB.dancers.length === 0) {
                 grid.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.5); grid-column: 1/-1; padding: 40px;">No dancers registered yet. Be the first!</p>';
                 return;
             }
-            
+
             DB.dancers.slice().reverse().forEach(dancer => {
                 const card = document.createElement('div');
                 card.className = 'dancer-card';
@@ -2976,10 +2976,10 @@
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             if (!toast) return;
-            
+
             toast.textContent = message;
             toast.className = `toast ${type} active`;
-            
+
             setTimeout(() => {
                 toast.classList.remove('active');
             }, 3000);
