@@ -1,0 +1,166 @@
+/* App-specific styles */
+
+/* Border utilities */
+.border-3 {
+  border-width: 3px;
+}
+
+/* Line clamp */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Font family fallback */
+.font-['Orbitron'] {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Custom focus styles */
+.form-input:focus-visible {
+  outline: none;
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+}
+
+/* Select dropdown styling */
+[data-radix-select-viewport] {
+  padding: 8px;
+}
+
+/* Dialog overlay */
+[data-radix-dialog-overlay] {
+  background: rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Dialog content */
+[data-radix-dialog-content] {
+  border: 1px solid var(--glass-border) !important;
+}
+
+/* Animation for stats counter */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stat-number {
+  animation: countUp 0.5s ease-out;
+}
+
+/* Hover lift effect */
+.hover\:-translate-y-1:hover {
+  transform: translateY(-4px);
+}
+
+.hover\:-translate-y-2:hover {
+  transform: translateY(-8px);
+}
+
+/* Shadow glow effects */
+.shadow-glow-cyan {
+  box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+}
+
+.shadow-glow-gold {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+/* Gradient text animation */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Card hover glow */
+.card-glow:hover {
+  box-shadow: 0 0 40px rgba(0, 243, 255, 0.2);
+}
+
+/* Button press effect */
+.btn-press:active {
+  transform: scale(0.98);
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, input, select, textarea {
+  transition: all 0.3s ease;
+}
+
+/* Focus ring for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+/* Loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Pulse animation for featured items */
+@keyframes featuredPulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+  }
+}
+
+.featured-pulse {
+  animation: featuredPulse 2s ease-in-out infinite;
+}
+
+/* Responsive typography */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  nav, footer, .cta-button {
+    display: none !important;
+  }
+  
+  section {
+    page-break-inside: avoid;
+  }
+}
